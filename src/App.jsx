@@ -35,16 +35,20 @@ function Phone() {
   const showTabs = state.onboarded;
 
   function renderScreen() {
+    if (!state.onboarded) {
+      switch (state.screen) {
+        case 'slides':   return <SlidesPage />;
+        case 'name':     return <NamePage />;
+        case 'moodpick': return <MoodPickPage />;
+        default:         return <Splash />;
+      }
+    }
     switch (state.screen) {
-      case 'slides':  return <SlidesPage />;
-      case 'name':    return <NamePage />;
-      case 'moodpick': return <MoodPickPage />;
-      case 'home':    return <Home />;
       case 'record':  return <Record />;
       case 'chat':    return <Chat />;
       case 'counsel': return <Counsel />;
       case 'profile': return <Profile />;
-      default:        return <Splash />;
+      default:        return <Home />;
     }
   }
 
