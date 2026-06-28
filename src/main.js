@@ -31,9 +31,6 @@ import './index.css';
   ];
   var replyI = 0;
 
-  /* ---------- status bar svg color helper ---------- */
-  function sbIcons(){ return '<span class="t">9:41</span><span class="r">'+ic('i-signal','s16')+ic('i-wifi','s16')+ic('i-batt','s20')+'</span>'; }
-
   /* ============ ONBOARDING ============ */
   var SLIDES = [
     {ic:'i-chat', t:'곁에서 조용히\n들어주는 동반자', b:'예약도, 기다림도 없이 지금 바로. 필요한 순간엔 사람 전문가로도 자연스럽게 이어드려요.', tone:['var(--breeze100)','var(--breezeDeep)']},
@@ -279,43 +276,61 @@ import './index.css';
   }
 
   /* ============ CHAT ============ */
+  function msgNode(m){
+    var el=document.createElement('div');
+    if(m.who==='me'){
+      el.style.cssText='align-self:flex-end;max-width:82%;padding:12px 16px;border-radius:20px 20px 6px 20px;background:var(--breeze);color:#fff';
+      el.innerHTML='<span class="bodyL">'+m.text+'</span>';
+    } else {
+      el.style.cssText='align-self:flex-start;display:flex;flex-direction:column;max-width:82%';
+      var mem=m.mem?'<span style="display:inline-flex;align-items:center;gap:5px;align-self:flex-start;background:var(--breeze100);color:var(--breezeDeep);padding:5px 10px;border-radius:999px;margin-bottom:4px" class="capm">'+ic('i-spark','s14')+'지난 대화를 기억하고 있어요</span>':'';
+      el.innerHTML=mem+'<div style="padding:12px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft);box-shadow:var(--shadowSoft)"><span class="bodyL">'+m.text+'</span></div>';
+    }
+    return el;
+  }
   function renderChat(){
-    statusBar(true, 'var(--breeze)'); view.style.padding='0';
+    statusBar(true); view.style.padding='0';
     if(S.msgs.length===0){ S.msgs=[
       {who:'naru',text:'안녕하세요, '+S.name+'님. 오늘도 이렇게 마음을 들여다보러 와줘서 고마워요.'},
       {who:'naru',text:'어제는 사람들 사이에서 작아지는 기분이 들었다고 했었죠. 오늘 그 마음은 좀 어떤가요?',mem:true}
     ]; }
-    var msgs = S.msgs.map(function(m){
-      if(m.who==='me') return '<div style="align-self:flex-end;max-width:82%;padding:12px 16px;border-radius:20px 20px 6px 20px;background:var(--breeze);color:#fff"><span class="bodyL">'+m.text+'</span></div>';
-      var mem = m.mem? '<span style="display:inline-flex;align-items:center;gap:5px;align-self:flex-start;background:var(--breeze100);color:var(--breezeDeep);padding:5px 10px;border-radius:999px;margin-bottom:4px" class="capm">'+ic('i-spark','s14')+'지난 대화를 기억하고 있어요</span>':'';
-      return '<div style="align-self:flex-start;display:flex;flex-direction:column;max-width:82%">'+mem+'<div style="padding:12px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft);box-shadow:var(--shadowSoft)"><span class="bodyL">'+m.text+'</span></div></div>';
-    }).join('');
-    var typing = S.typing? '<div style="align-self:flex-start;display:flex;gap:5px;padding:14px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft)"><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s 0s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .18s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .36s infinite"></span></div>':'';
-    view.innerHTML=
-      '<div style="height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--breeze50) 0%,var(--bg) 32%)">'+
-        '<div style="padding:47px 16px 12px;display:flex;align-items:center;gap:12px;background:linear-gradient(160deg,var(--breeze),var(--mist));position:relative;overflow:hidden;flex-shrink:0">'+
-          '<svg viewBox="0 0 390 80" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-1px;width:100%;height:40px;opacity:.4"><path d="M0,50 C90,20 150,70 240,44 C310,24 350,52 390,38 L390,80 L0,80 Z" fill="rgba(255,255,255,.4)"/></svg>'+
-          '<span style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.9);display:grid;place-items:center;flex-shrink:0;position:relative"><img src="../../assets/naru-symbol.png" style="width:24px;height:20px;object-fit:contain"/></span>'+
-          '<div style="flex:1;position:relative"><div class="title" style="color:#fff">나루</div><div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span style="width:6px;height:6px;border-radius:50%;background:#7BD0A8"></span><span class="cap" style="color:rgba(255,255,255,.85)">곁에서 듣고 있어요</span></div></div>'+
-        '</div>'+
-        '<div id="chatscroll" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px">'+
-          '<div class="cap" style="text-align:center;color:var(--faint)">오늘 · 오후 9:24</div>'+msgs+typing+
-        '</div>'+
-        '<div style="flex-shrink:0;padding-bottom:8px">'+
-          '<div style="display:flex;gap:8px;padding:8px 16px 12px;overflow-x:auto"><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">아직 좀 무거워요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">조금 나아졌어요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">그냥 들어주세요</button></div>'+
-          '<div style="padding:0 16px;display:flex;align-items:flex-end;gap:10px">'+
-            '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--bgSub);border-radius:24px;padding:0 18px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:14px 0"/></div>'+
-            '<button id="send" style="width:48px;height:48px;border-radius:50%;background:var(--breeze);border:none;display:grid;place-items:center;color:#fff;cursor:pointer;flex-shrink:0;box-shadow:0 6px 16px -6px var(--breeze)">'+ic('i-aup','s24')+'</button>'+
+    var isInit = !view.querySelector('#chatscroll');
+    if(isInit){
+      view.innerHTML=
+        '<div style="height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--breeze50) 0%,var(--bg) 32%)">'+
+          '<div style="padding:47px 16px 12px;display:flex;align-items:center;gap:12px;background:linear-gradient(160deg,var(--breeze),var(--mist));position:relative;overflow:hidden;flex-shrink:0">'+
+            '<svg viewBox="0 0 390 80" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-1px;width:100%;height:40px;opacity:.4"><path d="M0,50 C90,20 150,70 240,44 C310,24 350,52 390,38 L390,80 L0,80 Z" fill="rgba(255,255,255,.4)"/></svg>'+
+            '<span style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.9);display:grid;place-items:center;flex-shrink:0;position:relative"><img src="/NARU-APP/naru-symbol.png" style="width:24px;height:20px;object-fit:contain"/></span>'+
+            '<div style="flex:1;position:relative"><div class="title" style="color:#fff">나루</div><div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span style="width:6px;height:6px;border-radius:50%;background:#7BD0A8"></span><span class="cap" style="color:rgba(255,255,255,.85)">곁에서 듣고 있어요</span></div></div>'+
           '</div>'+
-        '</div>'+
-      '</div>';
-    var inp=document.getElementById('msg'), scroll=document.getElementById('chatscroll');
-    scroll.scrollTop=scroll.scrollHeight;
-    function send(text){ text=(text||inp.value).trim(); if(!text||S.typing) return; S.msgs.push({who:'me',text:text}); S.typing=true; renderChat();
-      setTimeout(function(){ S.typing=false; S.msgs.push({who:'naru',text:REPLIES[replyI%REPLIES.length]}); replyI++; renderChat(); },1400); }
-    document.getElementById('send').onclick=function(){ send(); };
-    inp.onkeydown=function(e){ if(e.key==='Enter') send(); };
-    Array.prototype.forEach.call(view.querySelectorAll('.sug'),function(b){ b.onclick=function(){ send(b.textContent); }; });
+          '<div id="chatscroll" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px">'+
+            '<div class="cap" style="text-align:center;color:var(--faint)">오늘 · 오후 9:24</div>'+
+          '</div>'+
+          '<div style="flex-shrink:0;padding-bottom:8px">'+
+            '<div style="display:flex;gap:8px;padding:8px 16px 12px;overflow-x:auto"><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">아직 좀 무거워요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">조금 나아졌어요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">그냥 들어주세요</button></div>'+
+            '<div style="padding:0 16px;display:flex;align-items:flex-end;gap:10px">'+
+              '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--bgSub);border-radius:24px;padding:0 18px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:14px 0"/></div>'+
+              '<button id="send" style="width:48px;height:48px;border-radius:50%;background:var(--breeze);border:none;display:grid;place-items:center;color:#fff;cursor:pointer;flex-shrink:0;box-shadow:0 6px 16px -6px var(--breeze)">'+ic('i-aup','s24')+'</button>'+
+            '</div>'+
+          '</div>'+
+        '</div>';
+      S.msgs.forEach(function(m){ document.getElementById('chatscroll').appendChild(msgNode(m)); });
+      var inp=document.getElementById('msg'), scroll=document.getElementById('chatscroll');
+      function send(text){ text=(text||inp.value).trim(); if(!text||S.typing) return; inp.value=''; S.msgs.push({who:'me',text:text}); S.typing=true;
+        scroll.appendChild(msgNode({who:'me',text:text}));
+        var typingEl=document.createElement('div'); typingEl.id='typing-indicator';
+        typingEl.style.cssText='align-self:flex-start;display:flex;gap:5px;padding:14px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft)';
+        typingEl.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s 0s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .18s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .36s infinite"></span>';
+        scroll.appendChild(typingEl); scroll.scrollTop=scroll.scrollHeight;
+        setTimeout(function(){ var ti=document.getElementById('typing-indicator'); if(ti) ti.remove();
+          S.typing=false; var reply={who:'naru',text:REPLIES[replyI%REPLIES.length]}; replyI++; S.msgs.push(reply);
+          scroll.appendChild(msgNode(reply)); scroll.scrollTop=scroll.scrollHeight; },1400); }
+      document.getElementById('send').onclick=function(){ send(); };
+      inp.onkeydown=function(e){ if(e.key==='Enter') send(); };
+      Array.prototype.forEach.call(view.querySelectorAll('.sug'),function(b){ b.onclick=function(){ send(b.textContent); }; });
+    }
+    var scroll=document.getElementById('chatscroll');
+    if(scroll) scroll.scrollTop=scroll.scrollHeight;
   }
 
   /* ============ COUNSEL ============ */
