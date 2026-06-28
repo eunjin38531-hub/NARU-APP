@@ -1,9 +1,4 @@
-@font-face { font-family:"Pretendard"; font-weight:300; src:url("./fonts/Pretendard-Light.otf") format("opentype"); font-display:swap; }
-@font-face { font-family:"Pretendard"; font-weight:400; src:url("./fonts/Pretendard-Regular.otf") format("opentype"); font-display:swap; }
-@font-face { font-family:"Pretendard"; font-weight:500; src:url("./fonts/Pretendard-Medium.otf") format("opentype"); font-display:swap; }
-@font-face { font-family:"Pretendard"; font-weight:600; src:url("./fonts/Pretendard-SemiBold.otf") format("opentype"); font-display:swap; }
-@font-face { font-family:"Pretendard"; font-weight:700; src:url("./fonts/Pretendard-Bold.otf") format("opentype"); font-display:swap; }
-@font-face { font-family:"Pretendard"; font-weight:800; src:url("./fonts/Pretendard-ExtraBold.otf") format("opentype"); font-display:swap; }
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap");
 
 :root {
   --breeze: #53A1B6;
@@ -28,7 +23,7 @@
   --borderSoft: #EEF2F6;
   --surface: #fff;
   --shadowSoft: 0 2px 14px -6px rgba(30,41,59,.12);
-  --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font: "Noto Sans KR", "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 .dark {

@@ -129,7 +129,7 @@ function AnalysisTab() {
               <circle key={i} cx={cx} cy={cy} r="4.5" stroke={s} />
             ))}
           </g>
-          <g fill="#94A3B8" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="Pretendard">
+          <g fill="#94A3B8" fontSize="11" fontWeight="600" textAnchor="middle" fontFamily="Noto Sans KR, system-ui, sans-serif">
             {[['월',14],['화',60],['수',106],['목',160],['금',212],['토',250],['일',292]].map(([d,x])=>(
               <text key={d} x={x} y="148">{d}</text>
             ))}
