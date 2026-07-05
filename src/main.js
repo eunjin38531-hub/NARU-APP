@@ -66,7 +66,7 @@ import './index.css';
           '<div style="display:flex;gap:7px">'+dots+'</div>'+
           '<button class="bodyMm" id="b-skip" style="border:none;background:none;color:var(--text3);cursor:pointer">건너뛰기</button>'+
         '</div>'+
-        '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:0 36px">'+
+        '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:0 28px">'+
           '<div style="position:relative;width:150px;height:150px;display:grid;place-items:center">'+
             '<span style="position:absolute;inset:0;border-radius:42% 58% 56% 44%/50% 46% 54% 50%;background:'+s.tone[0]+'"></span>'+
             '<span style="position:relative;color:'+s.tone[1]+'">'+icc(s.ic,'','width:56px;height:56px;stroke-width:1.6')+'</span>'+
@@ -84,7 +84,7 @@ import './index.css';
     view.innerHTML =
       '<div class="view-anim" style="flex:1;display:flex;flex-direction:column;background:var(--bg)">'+
         '<div style="padding:47px 20px 8px"><button id="b-back" style="border:none;background:none;cursor:pointer;color:var(--text2)">'+ic('i-left','s24')+'</button></div>'+
-        '<div style="flex:1;padding:20px 28px">'+
+        '<div style="flex:1;padding:20px 24px">'+
           '<div class="h2" style="margin-bottom:12px">어떻게 불러드리면<br>좋을까요?</div>'+
           '<div class="bodyL" style="color:var(--text3);margin-bottom:32px">편하게 불릴 이름이나 별명을 알려주세요.</div>'+
           '<input id="nm" placeholder="예) 지민" value="'+(S.name||'')+'" style="width:100%;box-sizing:border-box;border:none;border-bottom:2px solid var(--breeze);padding:10px 2px;font:700 24px/1.3 var(--font);color:var(--text);background:transparent;outline:none"/>'+
@@ -109,7 +109,7 @@ import './index.css';
     });
     view.innerHTML =
       '<div class="view-anim" style="flex:1;display:flex;flex-direction:column;background:var(--bg)">'+
-        '<div style="flex:1;padding:56px 28px 0">'+
+        '<div style="flex:1;padding:47px 24px 0">'+
           '<div class="h2" style="margin-bottom:12px">'+S.name+'님, 반가워요.<br>지금 마음은 어떤가요?</div>'+
           '<div class="bodyL" style="color:var(--text3);margin-bottom:32px">첫 마음을 기록하며 나루와 시작해볼까요.</div>'+
           '<div style="display:flex;flex-direction:column;gap:12px">'+rows+'</div>'+
@@ -169,7 +169,7 @@ import './index.css';
             '<button id="h-bell" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.22);border:none;display:grid;place-items:center;color:#fff;cursor:pointer;position:relative">'+ic('i-bell','s24')+'<span style="position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:var(--coral);border:2px solid var(--breeze)"></span></button>'+
           '</div>'+
         '</div>'+
-        '<div style="padding:0 16px 24px;margin-top:-56px;position:relative;display:flex;flex-direction:column;gap:20px">'+
+        '<div style="padding:0 16px 32px;margin-top:-56px;position:relative;display:flex;flex-direction:column;gap:20px">'+
           checkin+
           '<div><div class="title" style="padding:0 4px 12px">오늘의 작은 돌봄</div>'+
             '<div style="display:flex;gap:12px;overflow-x:auto;padding:0 4px 4px">'+
@@ -269,7 +269,7 @@ import './index.css';
         '<path d="M14 65 C37 65,37 78,60 78 C83 78,83 86,106 86 C133 86,133 88,160 88 C186 88,186 49,212 49 C231 49,231 36,250 36 C271 36,271 52,292 52 L292 136 L14 136 Z" fill="url(#fa)"/>'+
         '<path d="M14 65 C37 65,37 78,60 78 C83 78,83 86,106 86 C133 86,133 88,160 88 C186 88,186 49,212 49 C231 49,231 36,250 36 C271 36,271 52,292 52" fill="none" stroke="#53A1B6" stroke-width="3" stroke-linecap="round"/>'+
         '<g fill="var(--surface)" stroke-width="3"><circle cx="14" cy="65" r="4.5" stroke="#53A1B6"/><circle cx="60" cy="78" r="4.5" stroke="#7BBCC5"/><circle cx="106" cy="86" r="4.5" stroke="#E0A07F"/><circle cx="160" cy="88" r="4.5" stroke="#7BBCC5"/><circle cx="212" cy="49" r="4.5" stroke="#53A1B6"/><circle cx="250" cy="36" r="4.5" stroke="#3F8A9E"/><circle cx="292" cy="52" r="4.5" stroke="#53A1B6"/></g>'+
-        '<g fill="#94A3B8" font-family="Pretendard" font-size="11" font-weight="600" text-anchor="middle"><text x="14" y="148">월</text><text x="60" y="148">화</text><text x="106" y="148">수</text><text x="160" y="148">목</text><text x="212" y="148">금</text><text x="250" y="148">토</text><text x="292" y="148">일</text></g></svg></div>'+
+        '<g fill="currentColor" style="color:var(--faint)" font-family="Pretendard" font-size="11" font-weight="600" text-anchor="middle"><text x="14" y="148">월</text><text x="60" y="148">화</text><text x="106" y="148">수</text><text x="160" y="148">목</text><text x="212" y="148">금</text><text x="250" y="148">토</text><text x="292" y="148">일</text></g></svg></div>'+
       '<div style="padding:4px 4px 0"><span class="title">나루가 발견한 흐름</span></div>'+
       '<div class="card" style="padding:16px;display:flex;gap:12px;align-items:flex-start"><span style="width:40px;height:40px;border-radius:12px;flex-shrink:0;display:grid;place-items:center;background:var(--breeze100);color:var(--breezeDeep)">'+ic('i-moon','s20')+'</span><div><div class="bodyLm" style="margin-bottom:4px">수요일 저녁의 가라앉음</div><div class="bodyM" style="color:var(--text2)">최근 3주간 수요일 저녁마다 마음이 평소보다 낮아지는 경향이 보여요. 미리 가벼운 산책을 계획해보는 건 어떨까요?</div></div></div>'+
     '</div>';
@@ -362,7 +362,7 @@ import './index.css';
       : '<div class="card" style="padding:24px 16px;text-align:center"><div class="bodyM" style="color:var(--text3)">지금 바로 가능한 다른 상담사가 없어요.<br>예약으로 편안하게 만나보실 수 있어요.</div></div>';
     view.innerHTML='<div class="view-anim">'+
       '<div style="padding:47px 16px 4px"><div class="capm" style="color:var(--text3);margin-bottom:4px">전문가 상담</div><div class="h2">마음에 맞는 상담사</div></div>'+
-      '<div style="padding:12px 16px 24px;display:flex;flex-direction:column;gap:16px">'+
+      '<div style="padding:12px 16px 40px;display:flex;flex-direction:column;gap:16px">'+
         '<button class="card" id="c-sum" style="width:100%;padding:14px;display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--borderSoft)"><span style="width:40px;height:40px;border-radius:12px;background:var(--breeze50);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s20')+'</span><div style="flex:1"><div class="bodyMm">나루가 기억한 마음, 전문가에게 전하기</div><div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명하지 않아도 괜찮아요</div></div>'+icc('i-right','s20','color:var(--faint)')+'</button>'+
         /* 나루 추천 — 단일 카드 (그라데이션 밴드/좌측보더 인용박스 제거) */
         '<div class="card" style="padding:16px">'+
@@ -397,15 +397,15 @@ import './index.css';
       '</div></div>'+
       '<div style="padding:16px 16px 24px;display:flex;flex-direction:column;gap:16px">'+
         '<div class="card" style="padding:16px;display:flex;gap:14px;align-items:center"><span style="width:46px;height:46px;border-radius:14px;background:var(--breeze50);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-spark','s20')+'</span><div style="flex:1"><div class="bodyLm">이번 주, 네 번 곁에 머물렀어요</div><div class="cap" style="color:var(--text3);margin-top:3px">잠시 들렀다 가도, 오래 머물러도 괜찮아요</div></div></div>'+
-        '<div><div class="capm" style="color:var(--text3);padding:0 6px 8px">마음 관리</div><div class="card" style="overflow:hidden">'+row('i-bell','알림 설정','매일 저녁 9시')+'<div style="height:1px;background:var(--borderSoft);margin:0 16px"></div>'+row('i-target','나의 마음 목표','주 5회 기록')+'</div></div>'+
-        '<div><div class="capm" style="color:var(--text3);padding:0 6px 8px">앱 설정</div><div class="card" style="overflow:hidden">'+
+        '<div><div class="capm" style="color:var(--text3);padding:0 0 8px">마음 관리</div><div class="card" style="overflow:hidden">'+row('i-bell','알림 설정','매일 저녁 9시')+'<div style="height:1px;background:var(--borderSoft);margin:0 16px"></div>'+row('i-target','나의 마음 목표','주 5회 기록')+'</div></div>'+
+        '<div><div class="capm" style="color:var(--text3);padding:0 0 8px">앱 설정</div><div class="card" style="overflow:hidden">'+
           '<div class="row" style="cursor:default"><span class="rowic">'+ic('i-moon','s20')+'</span><div style="flex:1" class="bodyL">다크 모드</div><button class="toggle'+(S.dark?'':' off')+'" id="p-dark"><span class="knob"></span></button></div>'+
           '<div style="height:1px;background:var(--borderSoft);margin:0 16px"></div>'+row('i-lock','잠금 & 개인정보')+'</div></div>'+
-        '<div><div class="capm" style="color:var(--text3);padding:0 6px 8px">지원</div><div class="card" style="overflow:hidden">'+row('i-life','도움이 필요할 때','긴급 상담 연결',true)+'</div></div>'+
+        '<div><div class="capm" style="color:var(--text3);padding:0 0 8px">지원</div><div class="card" style="overflow:hidden">'+row('i-life','도움이 필요할 때','긴급 상담 연결',true)+'</div></div>'+
         '<button id="p-reset" style="border:none;background:none;color:var(--faint);cursor:pointer;padding:8px 0" class="bodyMm">온보딩 다시 보기</button>'+
         '<div class="cap" style="text-align:center;color:var(--faint)">마음이 흐르는 곳, 나루 · v1.0.0</div>'+
       '</div></div>';
-    document.getElementById('p-dark').onclick=function(){ S.dark=!S.dark; app.className=S.dark?'dark':''; renderProfile(); };
+    document.getElementById('p-dark').onclick=function(){ S.dark=!S.dark; app.className=S.dark?'dark':''; document.body.className=S.dark?'dark':''; renderProfile(); };
     document.getElementById('p-reset').onclick=function(){ S.onboarded=false; S.checked=false; S.reflect=false; S.mood=null; S.msgs=[]; renderSplash(); };
   }
 
