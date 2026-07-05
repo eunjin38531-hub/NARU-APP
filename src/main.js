@@ -343,13 +343,13 @@ import './index.css';
   ];
   function availTag(c){ return c.now
     ? '<span class="tag mist"><span style="width:6px;height:6px;border-radius:50%;background:#2E8F6B"></span>지금 가능</span>'
-    : '<span class="tag neutral">'+c.soon+'</span>'; }
+    : '<span class="tag neutral">다음 상담: '+c.soon+'</span>'; }
   function counselorRow(c){
     return '<button class="card crow" data-n="'+c.name+'" style="width:100%;padding:14px;display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--borderSoft)">'+
       '<span class="av'+(c.tone==='b'?' coral':'')+'" style="width:48px;height:48px">'+c.name.charAt(0)+'</span>'+
       '<div style="flex:1;min-width:0">'+
         '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="bodyLm">'+c.name+'</span>'+availTag(c)+'</div>'+
-        '<div class="cap" style="color:var(--text3)">'+c.role+' · '+c.years+'년 · '+c.format+'</div>'+
+        '<div style="display:flex;align-items:center;gap:6px"><span class="cap" style="color:var(--text3)">'+c.role+' · '+c.years+'년</span><span class="tag oat" style="padding:2px 8px;font-size:11px">'+c.format+'</span></div>'+
       '</div>'+
       '<span class="cap" style="color:var(--text3);display:inline-flex;align-items:center;gap:3px;flex-shrink:0;align-self:center"><svg class="ic s14" style="color:#E0A07F"><use href="#i-star"/></svg>'+c.rating+'</span>'+
       icc('i-right','s20','color:var(--faint);flex-shrink:0')+
@@ -363,9 +363,9 @@ import './index.css';
     var listHtml = others.length ? others.map(counselorRow).join('')
       : '<div class="card" style="padding:24px 16px;text-align:center"><div class="bodyM" style="color:var(--text3)">지금 바로 가능한 다른 상담사가 없어요.<br>예약으로 편안하게 만나보실 수 있어요.</div></div>';
     view.innerHTML='<div class="view-anim">'+
-      '<div style="padding:47px 16px 4px"><div class="capm" style="color:var(--text3);margin-bottom:4px">전문가 상담</div><div class="h2">마음에 맞는 상담사</div></div>'+
+      '<div style="padding:47px 16px 4px"><div class="capm" style="color:var(--text3);margin-bottom:4px">전문가 상담</div><div class="h2">내 상태에 맞는 전문가</div></div>'+
       '<div style="padding:12px 16px 40px;display:flex;flex-direction:column;gap:16px">'+
-        '<button class="card" id="c-sum" style="width:100%;padding:14px;display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--borderSoft)"><span style="width:40px;height:40px;border-radius:12px;background:var(--breeze50);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s20')+'</span><div style="flex:1"><div class="bodyMm">나루가 기억한 마음, 전문가에게 전하기</div><div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명하지 않아도 괜찮아요</div></div>'+icc('i-right','s20','color:var(--faint)')+'</button>'+
+        '<button class="card" id="c-sum" style="width:100%;padding:14px;display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--borderSoft)"><span style="width:40px;height:40px;border-radius:12px;background:var(--breeze50);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s20')+'</span><div style="flex:1"><div class="bodyMm">나루의 기록, 전문가에게 바로 공유</div><div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명할 필요 없어요</div></div>'+icc('i-right','s20','color:var(--faint)')+'</button>'+
         /* 나루 추천 — 단일 카드 (그라데이션 밴드/좌측보더 인용박스 제거) */
         '<div class="card" style="padding:16px">'+
           '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span class="tag">'+ic('i-spark','s14')+'나루 추천</span><span class="cap" style="color:var(--text3);display:inline-flex;align-items:center;gap:3px"><svg class="ic s14" style="color:#E0A07F"><use href="#i-star"/></svg>'+rec.rating+' · 후기 '+rec.reviews+'</span></div>'+
@@ -373,7 +373,7 @@ import './index.css';
           '<div class="bodyM" style="color:var(--text2);margin-top:14px">'+rec.approach+'</div>'+
           '<div class="cap" style="color:var(--text3);margin-top:12px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag oat">'+rec.format+'</span></div>'+
 
-          '<button class="btn md full c-link" data-n="'+rec.name+'" style="margin-top:16px">연결하기</button>'+
+          '<button class="btn md full c-link" data-n="'+rec.name+'" style="margin-top:16px">상담 신청하기</button>'+
         '</div>'+
         /* 다른 상담사 — 깔끔한 리스트 + 가벼운 필터 칩 */
         '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 4px 0"><span class="title">다른 상담사</span>'+
