@@ -159,7 +159,7 @@ import './index.css';
       '</div>' :
       '<div class="card" style="padding:16px">'+
         '<div class="title" style="margin-bottom:4px">오늘 마음은 어떤가요?</div>'+
-        '<div class="bodyM" style="color:var(--text3);margin-bottom:18px">지금 이 순간에 가장 가까운 얼굴을 골라주세요.</div>'+
+        '<div class="bodyM" style="color:var(--text3);margin-bottom:16px">지금 이 순간에 가장 가까운 얼굴을 골라주세요.</div>'+
         '<div style="display:flex;justify-content:space-between">'+faces+'</div>'+
       '</div>';
     view.innerHTML =
@@ -226,7 +226,7 @@ import './index.css';
     function faces(){ return MOODS.map(function(x){ var on=sheetMood===x.k; var circleBg=on?x.tone:(S.dark?x.tone+'30':x.soft); var faceCol=on?'#fff':(S.dark?x.tone:x.tone); return '<button class="moodbtn cmf" data-k="'+x.k+'"><span class="mood" style="width:48px;height:48px;background:'+circleBg+';'+(on?'box-shadow:0 8px 18px -6px '+x.tone+'88;transform:scale(1.06)':'')+'">'+faceSvg(x,48,faceCol)+'</span></button>'; }).join(''); }
     function paint(){
       ov.innerHTML='<div style="width:100%;background:var(--surface);border-radius:24px 24px 0 0;padding:12px 20px 28px;animation:up .3s cubic-bezier(.22,1,.36,1)">'+
-        '<div style="width:40px;height:5px;border-radius:999px;background:var(--border);margin:0 auto 18px"></div>'+
+        '<div style="width:40px;height:5px;border-radius:999px;background:var(--border);margin:0 auto 16px"></div>'+
         '<div class="h3" style="margin-bottom:4px">지금 마음을 남겨볼까요?</div>'+
         '<div class="bodyM" style="color:var(--text3);margin-bottom:16px">가장 가까운 감정을 먼저 골라주세요.</div>'+
         '<div style="display:flex;justify-content:space-between;margin-bottom:16px">'+faces()+'</div>'+
@@ -245,7 +245,7 @@ import './index.css';
     paint();
     var ta=ov.querySelector('#c-txt'); if(ta) ta.focus();
   }
-  function dayCell(d,mk,n,today){ var m=mood(mk); return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0;border-radius:16px;'+(today?'background:var(--breeze100)':'')+'"><span class="cap" style="color:var(--text3)">'+d+'</span><span class="mood" style="width:26px;height:26px;background:'+m.tone+'">'+faceSvg(m,26)+'</span><span class="bodyMm" style="color:'+(today?'var(--breezeDeep)':'var(--text2)')+';font-weight:'+(today?700:500)+'">'+n+'</span></div>'; }
+  function dayCell(d,mk,n,today){ var m=mood(mk); return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0;border-radius:16px;'+(today?'background:var(--breeze100)':'')+'"><span class="cap" style="color:var(--text3)">'+d+'</span><span class="mood" style="width:26px;height:26px;background:'+m.tone+'">'+faceSvg(m,26)+'</span><span class="bodyMm" style="color:'+(today?'var(--breezeDeep)':'var(--text2)')+';font-weight:'+(today?700:500)+'">'+n+'</span></div>'; }
   function entry(mk,label,time,text,tags){ var m=mood(mk); return '<div class="card" style="padding:16px;margin-bottom:12px"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><span class="mood" style="width:36px;height:36px;background:'+m.tone+'">'+faceSvg(m,36)+'</span><div style="flex:1"><div class="bodyMm">'+label+'</div></div><span class="cap" style="color:var(--faint)">'+time+'</span></div><div class="bodyM" style="color:var(--text2);margin-bottom:12px">'+text+'</div><div style="display:flex;gap:8px">'+tags.map(function(t){return '<span class="tag oat">#'+t+'</span>';}).join('')+'</div></div>'; }
   function recLog(){
     var userToday = S.entries.map(function(e){ return entry(e.mood,e.label,e.time,e.text,e.tags); }).join('');
@@ -285,7 +285,7 @@ import './index.css';
       el.innerHTML='<span class="bodyL">'+m.text+'</span>';
     } else {
       el.style.cssText='align-self:flex-start;display:flex;flex-direction:column;max-width:82%';
-      var mem=m.mem?'<span style="display:inline-flex;align-items:center;gap:5px;align-self:flex-start;background:var(--breeze100);color:var(--breezeDeep);padding:5px 10px;border-radius:999px;margin-bottom:4px" class="capm">'+ic('i-spark','s14')+'지난 대화를 기억하고 있어요</span>':'';
+      var mem=m.mem?'<span style="display:inline-flex;align-items:center;gap:5px;align-self:flex-start;background:var(--breeze100);color:var(--breezeDeep);padding:4px 8px;border-radius:999px;margin-bottom:4px" class="capm">'+ic('i-spark','s14')+'지난 대화를 기억하고 있어요</span>':'';
       el.innerHTML=mem+'<div style="padding:12px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft);box-shadow:var(--shadowSoft)"><span class="bodyL">'+m.text+'</span></div>';
     }
     return el;
@@ -309,9 +309,9 @@ import './index.css';
             '<div class="cap" style="text-align:center;color:var(--faint)">오늘 · 오후 9:24</div>'+
           '</div>'+
           '<div style="flex-shrink:0;padding-bottom:8px">'+
-            '<div style="display:flex;gap:8px;padding:8px 16px 12px;overflow-x:auto"><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">아직 좀 무거워요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">조금 나아졌어요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">그냥 들어주세요</button></div>'+
+            '<div style="display:flex;gap:8px;padding:8px 16px 12px;overflow-x:auto"><button class="chip sug">아직 좀 무거워요</button><button class="chip sug">조금 나아졌어요</button><button class="chip sug">그냥 들어주세요</button></div>'+
             '<div style="padding:0 16px;display:flex;align-items:flex-end;gap:10px">'+
-              '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:0 18px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:14px 0"/></div>'+
+              '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:0 16px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:14px 0"/></div>'+
               '<button id="send" style="width:48px;height:48px;border-radius:50%;background:var(--breeze);border:none;display:grid;place-items:center;color:#fff;cursor:pointer;flex-shrink:0;box-shadow:0 6px 16px -6px var(--breeze)">'+ic('i-aup','s24')+'</button>'+
             '</div>'+
           '</div>'+
