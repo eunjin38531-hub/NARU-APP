@@ -348,13 +348,13 @@ import './index.css';
      specialty:['일상 회복','수면·피로','긴장 완화'],avail:false}
   ];
   function availBadge(e){ return e.avail
-    ? '<span class="tag" style="background:var(--breeze100);color:var(--breezeDeep)">오늘 대화 가능</span>'
-    : '<span class="tag neutral">이번 주 가능</span>'; }
+    ? '<span class="tag mist" style="font-weight:500">지금 이야기 나눌 수 있어요</span>'
+    : '<span class="tag neutral">이번 주 만나볼 수 있어요</span>'; }
   function renderCounsel(){
     statusBar(false,'var(--bgSoft)'); view.style.padding='0';
     var rec=EXPERTS[0];
     var others=EXPERTS.slice(1);
-    function specTags(list){ return list.map(function(t){ return '<span class="tag neutral">'+t+'</span>'; }).join(''); }
+    function specTags(list){ return '<div class="cap" style="color:var(--text3);margin-bottom:8px">이런 이야기를 나눠요</div><div style="display:flex;gap:6px;flex-wrap:wrap">'+list.map(function(t){ return '<span style="display:inline-flex;align-items:center;font:500 12px/1 var(--font);padding:6px 10px;border-radius:999px;border:1px solid var(--border);color:var(--text3);background:transparent">'+t+'</span>'; }).join('')+'</div>'; }
     view.innerHTML='<div class="view-anim">'+
       '<div style="padding:47px 16px 8px">'+
         '<div class="capm" style="color:var(--text3);margin-bottom:4px">전문가 연결</div>'+
@@ -368,7 +368,7 @@ import './index.css';
           '<div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명하지 않아도 됩니다</div></div>'+
         '</div>'+
         /* 추천 상담사 — 단일 카드, 평점·후기 없음 */
-        '<div class="card" style="padding:20px">'+
+        '<div class="card" style="padding:20px;background:linear-gradient(145deg,var(--breeze50) 0%,var(--surface) 55%)">'+
           '<div style="margin-bottom:16px">'+
             '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
           '</div>'+
@@ -380,7 +380,7 @@ import './index.css';
           '<div style="background:var(--bgSoft);border-radius:12px;padding:14px;margin-bottom:14px">'+
             '<div class="bodyM" style="color:var(--text2);line-height:1.7">"'+rec.approach+'"</div>'+
           '</div>'+
-          '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">'+specTags(rec.specialty)+'</div>'+
+          '<div style="margin-bottom:14px">'+specTags(rec.specialty)+'</div>'+
           availBadge(rec)+
           '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px">만나보기</button>'+
         '</div>'+
