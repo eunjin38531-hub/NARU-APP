@@ -48,7 +48,7 @@ import './index.css';
           '<div class="title" style="font-weight:500;color:rgba(255,255,255,.95)">마음이 흐르는 곳, 나루</div>'+
         '</div>'+
         '<div class="inner" style="width:100%;display:flex;flex-direction:column;gap:12px">'+
-          '<button class="btn full" id="b-start" style="background:#fff;color:var(--breezeDeep)">시작하기</button>'+
+          '<button class="btn full" id="b-start" style="background:#fff;color:#2D6B7B">시작하기</button>'+
           '<button class="btn full" id="b-login" style="background:rgba(255,255,255,.18);color:#fff">이미 계정이 있어요</button>'+
         '</div>'+
       '</div>';
@@ -103,9 +103,11 @@ import './index.css';
     var rows='';
     MOODS.forEach(function(m){
       var on = S.mood===m.k;
-      rows+='<button class="moodbtn pick" data-k="'+m.k+'" style="flex-direction:row;gap:16px;padding:12px 16px;border-radius:16px;border:1px solid '+(on?m.tone:'var(--border)')+';background:'+(on?m.soft:'var(--surface)')+';width:100%">'+
+      var selBg = on ? (S.dark ? m.tone+'33' : m.soft) : 'var(--surface)';
+      var selText = on && S.dark ? m.tone : 'var(--text)';
+      rows+='<button class="moodbtn pick" data-k="'+m.k+'" style="flex-direction:row;gap:16px;padding:12px 16px;border-radius:16px;border:1px solid '+(on?m.tone:'var(--border)')+';background:'+selBg+';width:100%">'+
         '<span class="mood" style="width:44px;height:44px;background:'+(on?m.tone:m.soft)+';'+(on?'box-shadow:0 8px 20px -6px '+m.tone+'88':'')+'">'+faceSvg(m,44,on?'#fff':m.tone)+'</span>'+
-        '<span class="bodyL" style="font-weight:600">'+m.label+'</span></button>';
+        '<span class="bodyL" style="font-weight:600;color:'+selText+'">'+m.label+'</span></button>';
     });
     view.innerHTML =
       '<div class="view-anim" style="flex:1;display:flex;flex-direction:column;background:var(--bg)">'+
@@ -143,8 +145,8 @@ import './index.css';
     var m = mood(S.mood);
     var hr=new Date().getHours();
     var greet = hr<12?'좋은 아침이에요':hr<18?'좋은 오후예요':'편안한 저녁이에요';
-    var faces = MOODS.map(function(x){ var on=S.mood===x.k;
-      return '<button class="moodbtn hmood" data-k="'+x.k+'"><span class="mood" style="width:52px;height:52px;background:'+(on?x.tone:x.soft)+';'+(on?'box-shadow:0 8px 20px -6px '+x.tone+'88;transform:scale(1.06)':'')+'">'+faceSvg(x,52,on?'#fff':x.tone)+'</span><span class="cap" style="color:var(--text3);margin-top:2px">'+x.label.replace(/요$/,'').replace('아주 좋','좋아').slice(0,4)+'</span></button>';
+    var faces = MOODS.map(function(x){ var on=S.mood===x.k; var cirBg=on?x.tone:(S.dark?x.tone+'30':x.soft);
+      return '<button class="moodbtn hmood" data-k="'+x.k+'"><span class="mood" style="width:52px;height:52px;background:'+cirBg+';'+(on?'box-shadow:0 8px 20px -6px '+x.tone+'88;transform:scale(1.06)':'')+'">'+faceSvg(x,52,on?'#fff':x.tone)+'</span><span class="cap" style="color:var(--text3);margin-top:2px">'+x.label.replace(/요$/,'').replace('아주 좋','좋아').slice(0,4)+'</span></button>';
     }).join('');
     var checkin = S.checked ?
       '<div class="card" style="padding:16px">'+
@@ -221,7 +223,7 @@ import './index.css';
     var sheetMood='ok', txt='';
     var ov=document.createElement('div');
     ov.style.cssText='position:absolute;inset:0;background:rgba(15,23,42,.4);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;align-items:flex-end;z-index:40';
-    function faces(){ return MOODS.map(function(x){ var on=sheetMood===x.k; return '<button class="moodbtn cmf" data-k="'+x.k+'"><span class="mood" style="width:48px;height:48px;background:'+(on?x.tone:x.soft)+';'+(on?'box-shadow:0 8px 18px -6px '+x.tone+'88;transform:scale(1.06)':'')+'">'+faceSvg(x,48,on?'#fff':x.tone)+'</span></button>'; }).join(''); }
+    function faces(){ return MOODS.map(function(x){ var on=sheetMood===x.k; var circleBg=on?x.tone:(S.dark?x.tone+'30':x.soft); var faceCol=on?'#fff':(S.dark?x.tone:x.tone); return '<button class="moodbtn cmf" data-k="'+x.k+'"><span class="mood" style="width:48px;height:48px;background:'+circleBg+';'+(on?'box-shadow:0 8px 18px -6px '+x.tone+'88;transform:scale(1.06)':'')+'">'+faceSvg(x,48,faceCol)+'</span></button>'; }).join(''); }
     function paint(){
       ov.innerHTML='<div style="width:100%;background:var(--surface);border-radius:24px 24px 0 0;padding:12px 20px 28px;animation:up .3s cubic-bezier(.22,1,.36,1)">'+
         '<div style="width:40px;height:5px;border-radius:999px;background:var(--border);margin:0 auto 18px"></div>'+
