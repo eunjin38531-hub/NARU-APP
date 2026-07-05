@@ -38,7 +38,7 @@ body{
   box-shadow:0 30px 70px -18px rgba(30,41,59,.32),0 0 0 1px rgba(15,23,42,.06);
   display:flex;flex-direction:column;
 }
-.sb{position:absolute;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 28px 0;pointer-events:none;background:linear-gradient(to bottom,var(--bg) 52%,transparent);}
+.sb{position:absolute;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 28px 0;pointer-events:none;background:var(--bg);transition:background .2s,color .2s;}
 .sb .t{font:600 15px/1 var(--font);} .sb .r{display:flex;align-items:center;gap:6px;}
 .sb svg{color:var(--text);fill:var(--text);}
 .sb.light{background:transparent;}

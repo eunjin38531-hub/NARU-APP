@@ -201,6 +201,10 @@ import './index.css';
     } else {
       Array.prototype.forEach.call(view.querySelectorAll('.hmood'),function(b){ b.onclick=function(){ S.mood=b.getAttribute('data-k'); S.checked=true; renderHome(); }; });
     }
+    view.onscroll=function(){
+      var scrolled=view.scrollTop>30;
+      sb.className=scrolled?'sb':'sb light';
+    };
   }
 
   /* ============ RECORD ============ */
@@ -409,11 +413,15 @@ import './index.css';
       '</div></div>';
     document.getElementById('p-dark').onclick=function(){ S.dark=!S.dark; app.className=S.dark?'dark':''; document.body.className=S.dark?'dark':''; renderProfile(); };
     document.getElementById('p-reset').onclick=function(){ S.onboarded=false; S.checked=false; S.reflect=false; S.mood=null; S.msgs=[]; renderSplash(); };
+    view.onscroll=function(){
+      var scrolled=view.scrollTop>30;
+      sb.className=scrolled?'sb':'sb light';
+    };
   }
 
   /* ============ ROUTER ============ */
   var RENDER={home:renderHome,record:renderRecord,chat:renderChat,counsel:renderCounsel,profile:renderProfile};
-  function go(screen){ S.screen=screen; document.getElementById('fab').style.display='none'; view.style.overflowY = (screen==='chat') ? 'hidden' : 'auto'; if(view.scrollTo) view.scrollTo(0,0); else view.scrollTop=0; RENDER[screen](); renderTabs(); }
+  function go(screen){ S.screen=screen; document.getElementById('fab').style.display='none'; view.onscroll=null; view.style.overflowY = (screen==='chat') ? 'hidden' : 'auto'; if(view.scrollTo) view.scrollTo(0,0); else view.scrollTop=0; RENDER[screen](); renderTabs(); }
   window.naruGo = go; // for testing
   window.__seed = function(o){ Object.assign(S, o); if(o.dark!==undefined) app.className=S.dark?'dark':''; }; // for screenshots
   window.__screen = { splash:renderSplash, slides:renderSlides, name:renderName, moods:renderMoodPick }; // for screenshots
