@@ -22,7 +22,7 @@ import './index.css';
   function ic(id,cls){ return '<svg class="ic '+(cls||'s24')+'"><use href="#'+id+'"/></svg>'; }
   function icc(id,cls,style){ return '<svg class="ic '+(cls||'s24')+'" style="'+(style||'')+'"><use href="#'+id+'"/></svg>'; }
   function faceSvg(m,size,stroke){ stroke=stroke||'#fff'; return '<svg width="'+(size*0.6)+'" height="'+(size*0.6)+'" viewBox="0 0 48 48" fill="none" stroke="'+stroke+'" stroke-width="3" stroke-linecap="round"><circle cx="18" cy="22" r=".5"/><circle cx="30" cy="22" r=".5"/><path d="'+m.mouth+'"/></svg>'; }
-  function statusBar(light){ sb.className = 'sb' + (light?' light':''); }
+  function statusBar(){ }
   var REPLIES = [
     "그랬군요. 그 마음, 충분히 그럴 수 있어요. 조금 더 들려주실래요?",
     "이야기해줘서 고마워요. 그 순간 가장 크게 느껴진 감정은 무엇이었나요?",
@@ -201,10 +201,6 @@ import './index.css';
     } else {
       Array.prototype.forEach.call(view.querySelectorAll('.hmood'),function(b){ b.onclick=function(){ S.mood=b.getAttribute('data-k'); S.checked=true; renderHome(); }; });
     }
-    view.onscroll=function(){
-      var scrolled=view.scrollTop>30;
-      sb.className=scrolled?'sb':'sb light';
-    };
   }
 
   /* ============ RECORD ============ */
@@ -413,10 +409,6 @@ import './index.css';
       '</div></div>';
     document.getElementById('p-dark').onclick=function(){ S.dark=!S.dark; app.className=S.dark?'dark':''; document.body.className=S.dark?'dark':''; renderProfile(); };
     document.getElementById('p-reset').onclick=function(){ S.onboarded=false; S.checked=false; S.reflect=false; S.mood=null; S.msgs=[]; renderSplash(); };
-    view.onscroll=function(){
-      var scrolled=view.scrollTop>30;
-      sb.className=scrolled?'sb':'sb light';
-    };
   }
 
   /* ============ ROUTER ============ */
