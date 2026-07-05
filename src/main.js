@@ -106,7 +106,7 @@ import './index.css';
       var selBg = on ? (S.dark ? m.tone+'33' : m.soft) : 'var(--surface)';
       var selText = on && S.dark ? m.tone : 'var(--text)';
       rows+='<button class="moodbtn pick" data-k="'+m.k+'" style="flex-direction:row;gap:16px;padding:12px 16px;border-radius:16px;border:1px solid '+(on?m.tone:'var(--border)')+';background:'+selBg+';width:100%">'+
-        '<span class="mood" style="width:44px;height:44px;background:'+(on?m.tone:m.soft)+';'+(on?'box-shadow:0 8px 20px -6px '+m.tone+'88':'')+'">'+faceSvg(m,44,on?'#fff':m.tone)+'</span>'+
+        '<span class="mood" style="width:44px;height:44px;background:'+(on?m.tone:(S.dark?m.tone+'30':m.soft))+';'+(on?'box-shadow:0 8px 20px -6px '+m.tone+'88':'')+'">'+faceSvg(m,44,on?'#fff':m.tone)+'</span>'+
         '<span class="bodyL" style="font-weight:600;color:'+selText+'">'+m.label+'</span></button>';
     });
     view.innerHTML =

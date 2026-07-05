@@ -7,7 +7,7 @@
   --font:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
 }
 .dark{
-  --text:#EEF3F8; --text2:#C2CEDC; --text3:#8B9AAE; --faint:#7B8FA7;
+  --text:#F0F5FB; --text2:#CBD7E8; --text3:#9AAEC5; --faint:#8A9EBA;
   --bg:#0E1626; --bgSoft:#121C2E; --bgSub:#111825; --border:#293750; --borderSoft:#22304A; --surface:#172238;
   --breezeDeep:#7BBCC5;
   --breeze100:#1B4250; --breeze50:#14303A; --mist100:#1E3D45; --coralSoft:#3A2620; --oatSoft:#2A2823;
@@ -47,6 +47,7 @@ body{
 .tabbar{flex-shrink:0;display:flex;justify-content:space-around;align-items:flex-end;
   padding:8px 8px 34px;border-top:1px solid var(--borderSoft);background:var(--surface);}
 .tab{flex:1;max-width:72px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 0;color:#9CA3AF;border:none;background:none;cursor:pointer;transition:color .15s;}
+.dark .tab{color:#8A9EBA;}
 .tab .ic{width:24px;height:24px;} .tab .lb{font:500 11px/1 var(--font);}
 .tab.on{color:var(--breeze);} .tab.on .lb{font-weight:700;}
 .tab.on .ic{stroke-width:2.4;}
