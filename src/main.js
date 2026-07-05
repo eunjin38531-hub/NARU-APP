@@ -300,7 +300,7 @@ import './index.css';
     if(isInit){
       view.innerHTML=
         '<div style="height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--breeze50) 0%,var(--bg) 32%)">'+
-          '<div style="padding:47px 16px 12px;display:flex;align-items:center;gap:12px;background:linear-gradient(160deg,var(--breeze),var(--mist));position:relative;overflow:hidden;flex-shrink:0">'+
+          '<div style="padding:47px 16px 12px;display:flex;align-items:center;gap:12px;background:'+(S.dark?'linear-gradient(160deg,#1A3D4E,#163446)':'linear-gradient(160deg,var(--breeze),var(--mist))')+';position:relative;overflow:hidden;flex-shrink:0">'+
             '<svg viewBox="0 0 390 80" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-1px;width:100%;height:40px;opacity:.4"><path d="M0,50 C90,20 150,70 240,44 C310,24 350,52 390,38 L390,80 L0,80 Z" fill="rgba(255,255,255,.4)"/></svg>'+
             '<span style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.9);display:grid;place-items:center;flex-shrink:0;position:relative"><img src="/NARU-APP/naru-symbol.png" style="width:24px;height:20px;object-fit:contain"/></span>'+
             '<div style="flex:1;position:relative"><div class="title" style="color:#fff">나루</div><div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span style="width:6px;height:6px;border-radius:50%;background:#7BD0A8"></span><span class="cap" style="color:rgba(255,255,255,.85)">곁에서 듣고 있어요</span></div></div>'+
@@ -311,7 +311,7 @@ import './index.css';
           '<div style="flex-shrink:0;padding-bottom:8px">'+
             '<div style="display:flex;gap:8px;padding:8px 16px 12px;overflow-x:auto"><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">아직 좀 무거워요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">조금 나아졌어요</button><button class="chip sug" style="font-weight:500;font-size:13px;padding:9px 14px">그냥 들어주세요</button></div>'+
             '<div style="padding:0 16px;display:flex;align-items:flex-end;gap:10px">'+
-              '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--bgSub);border-radius:24px;padding:0 18px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:14px 0"/></div>'+
+              '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:0 18px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:14px 0"/></div>'+
               '<button id="send" style="width:48px;height:48px;border-radius:50%;background:var(--breeze);border:none;display:grid;place-items:center;color:#fff;cursor:pointer;flex-shrink:0;box-shadow:0 6px 16px -6px var(--breeze)">'+ic('i-aup','s24')+'</button>'+
             '</div>'+
           '</div>'+
