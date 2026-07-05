@@ -7,8 +7,9 @@
   --font:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
 }
 .dark{
-  --text:#EEF3F8; --text2:#C2CEDC; --text3:#8B9AAE; --faint:#5E6E83;
-  --bg:#0E1626; --bgSoft:#121C2E; --bgSub:#172238; --border:#293750; --borderSoft:#22304A; --surface:#172238;
+  --text:#EEF3F8; --text2:#C2CEDC; --text3:#8B9AAE; --faint:#7B8FA7;
+  --bg:#0E1626; --bgSoft:#121C2E; --bgSub:#111825; --border:#293750; --borderSoft:#22304A; --surface:#172238;
+  --breezeDeep:#7BBCC5;
   --breeze100:#1B4250; --breeze50:#14303A; --mist100:#1E3D45; --coralSoft:#3A2620; --oatSoft:#2A2823;
   --shadowSoft:0 2px 18px -8px rgba(0,0,0,.5);
 }
@@ -75,6 +76,7 @@ body.dark{background:#0D1520;}
 .seg{display:flex;background:var(--bgSub);border-radius:12px;padding:4px;}
 .seg button{flex:1;border:none;background:none;cursor:pointer;padding:9px 0;border-radius:8px;font:500 14px/1 var(--font);color:var(--text3);}
 .seg button.on{background:var(--surface);color:var(--text);box-shadow:var(--shadowSoft);}
+.dark .seg button.on{box-shadow:0 1px 4px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.07);}
 .mood{border-radius:50%;display:grid;place-items:center;border:none;background:var(--bgSub);cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s;}
 .moodbtn{display:flex;flex-direction:column;align-items:center;gap:8px;border:none;background:none;cursor:pointer;}
 .toggle{width:50px;height:30px;border-radius:999px;background:var(--breeze);position:relative;border:none;cursor:pointer;flex-shrink:0;transition:background .2s;}
