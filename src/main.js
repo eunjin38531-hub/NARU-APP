@@ -336,11 +336,23 @@ import './index.css';
   }
 
   /* ============ COUNSEL ============ */
-  /* 전문분야별 고정 파스텔 컬러 팔레트 (bg / text) */
+  /* 전문분야 카테고리별 채도 구분 컬러 (쿨/웜/뉴트럴 계열) */
+  var SPEC_COLOR={
+    '불안·걱정':{bg:'#EBF2FF',fg:'#3660B8'},   /* 쿨 블루 — 차분 */
+    '관계 고민':{bg:'#FFF2EC',fg:'#B85A30'},   /* 웜 테라코타 */
+    '자기 이해':{bg:'#F2F5EE',fg:'#4F7040'},   /* 뉴트럴 세이지 */
+    '감정 정리':{bg:'#FFF8E6',fg:'#9A6C00'},   /* 웜 앰버 */
+    '번아웃'   :{bg:'#FFF0F4',fg:'#A84060'},   /* 웜 로즈 */
+    '자존감'   :{bg:'#F2EEFF',fg:'#6048B0'},   /* 쿨 라벤더 */
+    '일상 회복':{bg:'#EDFAF2',fg:'#2E7A4A'},   /* 뉴트럴 민트 그린 */
+    '수면·피로':{bg:'#EEEEFF',fg:'#4050A8'},   /* 쿨 인디고 */
+    '긴장 완화':{bg:'#ECFAF8',fg:'#207070'}    /* 뉴트럴 틸 */
+  };
+  /* 아바타: 전문분야 무드보드 감정 이모지 고정 배정 */
   var EXPERT_PALETTE=[
-    {bg:'#EAF2FF',fg:'#3B6FD4',emoji:'🌊'}, /* 불안·관계 — 차분한 블루 */
-    {bg:'#FFF0ED',fg:'#C0604A',emoji:'🌿'}, /* 감정·번아웃 — 따뜻한 코랄 */
-    {bg:'#EDF7F0',fg:'#3A7D5A',emoji:'🌙'}  /* 일상회복·수면 — 세이지 그린 */
+    {bg:'#EBF2FF',fg:'#3660B8',emoji:'🌸',ring:'#BAD4F8'}, /* 평온/불안 — 벚꽃(차분함) */
+    {bg:'#FFF8E6',fg:'#9A6C00',emoji:'☀️',ring:'#F5D98A'}, /* 회복/번아웃 — 햇살(따뜻함) */
+    {bg:'#EEEEFF',fg:'#4050A8',emoji:'🌙',ring:'#C0CAEE'}  /* 수면/휴식 — 달(고요함) */
   ];
   var EXPERTS=[
     {name:'이서연',role:'임상심리전문가',years:8,
@@ -353,20 +365,30 @@ import './index.css';
      approach:'작은 변화부터, 일상의 리듬을 함께 회복해요.',
      specialty:['일상 회복','수면·피로','긴장 완화'],avail:false,nextSlot:'오늘 오후 6시',pi:2}
   ];
+  /* SVG 노이즈 텍스처 — 종이 질감 (opacity 2%) */
+  var NOISE_BG='url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.68\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3CfeColorMatrix type=\'saturate\' values=\'0\'/%3E%3C/filter%3E%3Crect width=\'200\' height=\'200\' filter=\'url(%23n)\' opacity=\'0.045\'/%3E%3C/svg%3E")';
   function renderCounsel(){
     statusBar(false,'transparent'); view.style.padding='0';
     var rec=EXPERTS[0];
     var others=EXPERTS.slice(1);
+    function specTag(s){
+      var c=SPEC_COLOR[s]||{bg:'#F0F0F0',fg:'#606060'};
+      return '<span style="background:'+c.bg+';color:'+c.fg+';border-radius:6px;padding:2px 8px;font-size:11px;font-weight:500">'+s+'</span>';
+    }
+    function specTagSm(s){
+      var c=SPEC_COLOR[s]||{bg:'#F0F0F0',fg:'#606060'};
+      return '<span style="background:'+c.bg+';color:'+c.fg+';border-radius:4px;padding:1px 6px;font-size:11px;font-weight:500">'+s+'</span>';
+    }
     function availBadge(c,small){
       var fs=small?'font-size:11px':'font-size:12px';
-      if(c.avail) return '<span style="display:inline-flex;align-items:center;gap:4px;'+fs+';font-weight:500;color:#3A7D5A">'+
-        '<span style="width:6px;height:6px;border-radius:50%;background:#3A7D5A;display:inline-block"></span>지금 이야기 나눌 수 있어요</span>';
+      if(c.avail) return '<span style="display:inline-flex;align-items:center;gap:4px;'+fs+';font-weight:500;color:#2E7A4A">'+
+        '<span style="width:6px;height:6px;border-radius:50%;background:#2E7A4A;display:inline-block"></span>지금 이야기 나눌 수 있어요</span>';
       return '<span style="display:inline-flex;align-items:center;gap:4px;'+fs+';font-weight:500;color:var(--text3)">'+
         '<span style="width:6px;height:6px;border-radius:50%;background:var(--faint);display:inline-block"></span>'+(c.nextSlot?'다음 상담 가능: '+c.nextSlot:'이번 주 예약 가능')+'</span>';
     }
     function avatarCircle(c,size,fsize){
       var p=EXPERT_PALETTE[c.pi||0];
-      return '<span style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:'+p.bg+';display:grid;place-items:center;flex-shrink:0;font-size:'+fsize+'px">'+p.emoji+'</span>';
+      return '<span style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:'+p.bg+';border:2px solid '+p.ring+';display:grid;place-items:center;flex-shrink:0;font-size:'+fsize+'px;box-shadow:0 2px 8px -2px rgba(0,0,0,.08)">'+p.emoji+'</span>';
     }
     function recCardBody(c){
       var p=EXPERT_PALETTE[c.pi||0];
@@ -376,17 +398,16 @@ import './index.css';
             '<div class="bodyLm" style="margin-bottom:2px">'+c.name+'</div>'+
             '<div class="cap" style="color:var(--text3)">'+c.role+' · '+c.years+'년 경력</div>'+
             '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">'+
-              c.specialty.map(function(s){ return '<span style="background:'+p.bg+';color:'+p.fg+';border-radius:6px;padding:2px 8px;font-size:11px;font-weight:500">'+s+'</span>'; }).join('')+
+              c.specialty.map(specTag).join('')+
             '</div>'+
           '</div>'+
         '</div>'+
-        '<div style="border-left:3px solid '+p.bg.replace('FF','CC')+';padding-left:12px;margin-top:12px;border-color:'+p.fg+'33">'+
+        '<div style="border-left:3px solid '+p.fg+'30;padding-left:12px;margin-top:12px">'+
           '<div class="bodyM" style="color:var(--text2);line-height:1.75">'+c.approach+'</div>'+
         '</div>'+
         '<div style="margin-top:10px">'+availBadge(c,false)+'</div>';
     }
     function counselRowCard(c, i){
-      var p=EXPERT_PALETTE[c.pi||0];
       return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+'>'+
         '<div style="display:flex;align-items:flex-start;gap:12px;padding:16px">'+
           avatarCircle(c,40,18)+
@@ -397,7 +418,7 @@ import './index.css';
             '</div>'+
             '<div class="cap" style="color:var(--text3);margin-bottom:6px">'+c.role+'</div>'+
             '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px">'+
-              c.specialty.map(function(s){ return '<span style="background:'+p.bg+';color:'+p.fg+';border-radius:4px;padding:1px 6px;font-size:11px;font-weight:500">'+s+'</span>'; }).join('')+
+              c.specialty.map(specTagSm).join('')+
             '</div>'+
             availBadge(c,true)+
           '</div>'+
@@ -405,56 +426,61 @@ import './index.css';
         '</div>'+
       '</div>';
     }
-    /* 상단 그라디언트 히어로 */
-    var heroGrad='linear-gradient(160deg,#E8F3FF 0%,#F5EDFF 50%,#FFF4ED 100%)';
-    view.innerHTML='<div class="view-anim">'+
-      /* 히어로 헤더 — 그라디언트 배경 + 파스텔 일러스트 오브 */
-      '<div style="background:'+heroGrad+';padding:48px 16px 24px;position:relative;overflow:hidden">'+
-        /* 배경 장식 원 */
-        '<span style="position:absolute;right:-24px;top:-24px;width:120px;height:120px;border-radius:50%;background:rgba(180,200,255,.18);pointer-events:none"></span>'+
-        '<span style="position:absolute;right:40px;bottom:-16px;width:72px;height:72px;border-radius:50%;background:rgba(255,200,170,.16);pointer-events:none"></span>'+
+    /* 페이지 전체 배경 — 웜 뉴트럴 그라디언트(상→하) */
+    var pageBg='linear-gradient(180deg,#E6EFFF 0%,#F2EDFF 22%,#FFF4ED 48%,#FBF6F0 72%,#F7F3EF 100%)';
+    /* 히어로 헤더 배경 (상단 절반만 더 진하게) */
+    var heroBg='linear-gradient(155deg,#DDEAFF 0%,#EDE5FF 45%,#FFE8D8 100%)';
+    view.innerHTML='<div class="view-anim" style="background:'+pageBg+';min-height:100%">'+
+      /* 히어로 헤더 */
+      '<div style="background:'+heroBg+';padding:48px 16px 28px;position:relative;overflow:hidden">'+
+        '<span style="position:absolute;right:-20px;top:-20px;width:110px;height:110px;border-radius:50%;background:rgba(180,160,255,.14);pointer-events:none"></span>'+
+        '<span style="position:absolute;left:-16px;bottom:0;width:80px;height:80px;border-radius:50%;background:rgba(255,180,140,.12);pointer-events:none"></span>'+
         '<div class="capm" style="color:var(--text3);margin-bottom:6px">전문가 연결</div>'+
         '<div class="h2" style="margin-bottom:4px">마음에 맞는 상담사,<br>나루가 이어드립니다</div>'+
         '<div class="bodyM" style="color:var(--text3);margin-top:4px">처음부터 다시 말하지 않아도 괜찮아요</div>'+
       '</div>'+
       /* 핸드오프 배너 */
       '<div style="padding:12px 16px 0">'+
-        '<div style="background:var(--breeze50);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center">'+
+        '<div style="background:rgba(83,161,182,.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;border:1px solid rgba(83,161,182,.2)">'+
           '<span style="width:32px;height:32px;border-radius:8px;background:var(--breeze100);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s16')+'</span>'+
           '<div class="bodyM" style="color:var(--breezeDeep);font-weight:500">나루의 기록이 상담사에게 함께 전달돼요</div>'+
         '</div>'+
       '</div>'+
       /* 카드 영역 */
       '<div style="padding:16px 16px 40px;display:flex;flex-direction:column;gap:16px">'+
-        /* 추천 카드 — accent border + 배경 틴트 */
+        /* 추천 카드 — 노이즈 텍스처 + accent border */
         '<div>'+
           '<div class="capm" style="color:var(--text3);margin-bottom:8px">나루의 추천</div>'+
-          '<div style="background:#EAF2FF;border-radius:16px;padding:16px;border:1.5px solid #BAD4F8">'+
-            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'+
+          '<div style="background:#EAF0FF;background-image:'+NOISE_BG+';background-size:200px 200px;border-radius:16px;padding:16px;border:1.5px solid #BAD0F8;box-shadow:0 4px 20px -8px rgba(60,90,200,.14)">'+
+            /* "나의 기록 기반" 강조 배지 */
+            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'+
               '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
-              '<span class="cap" style="color:var(--text3)">나의 기록 기반</span>'+
+              '<span style="display:inline-flex;align-items:center;gap:5px;background:var(--breezeDeep);color:#fff;border-radius:999px;padding:4px 10px">'+
+                ic('i-msq','s14')+
+                '<span style="font-size:12px;font-weight:600;line-height:1">나의 기록 기반</span>'+
+              '</span>'+
             '</div>'+
             recCardBody(rec)+
             '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px;background:var(--breezeDeep)">만나보기</button>'+
           '</div>'+
         '</div>'+
-        /* 리스트 카드 */
+        /* 리스트 카드 — 노이즈 텍스처 */
         '<div>'+
           '<div class="capm" style="color:var(--text3);margin-bottom:8px">다른 분과 이야기하고 싶다면</div>'+
-          '<div class="card" style="overflow:hidden;padding:0">'+
+          '<div style="background:#FDFAF7;background-image:'+NOISE_BG+';background-size:200px 200px;border:1px solid var(--borderSoft);border-radius:16px;box-shadow:var(--shadowSoft);overflow:hidden">'+
             others.map(counselRowCard).join('')+
           '</div>'+
         '</div>'+
         /* 전문분야 컬러 범례 */
-        '<div style="background:var(--bgSub);border-radius:12px;padding:12px 14px">'+
-          '<div class="cap" style="color:var(--text3);margin-bottom:8px;font-weight:500">전문분야 색상 안내</div>'+
+        '<div style="background:rgba(255,255,255,.55);backdrop-filter:blur(8px);border-radius:12px;padding:12px 14px;border:1px solid var(--borderSoft)">'+
+          '<div class="cap" style="color:var(--text3);margin-bottom:8px;font-weight:500">상담사 아이콘 안내</div>'+
           '<div style="display:flex;flex-direction:column;gap:6px">'+
-            EXPERTS.map(function(c){var p=EXPERT_PALETTE[c.pi||0];return '<div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:50%;background:'+p.fg+';flex-shrink:0"></span><span class="cap" style="color:var(--text2)">'+p.emoji+' '+c.specialty.join(' · ')+'</span></div>';}).join('')+
+            EXPERTS.map(function(c){var p=EXPERT_PALETTE[c.pi||0];return '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:14px">'+p.emoji+'</span><span class="cap" style="color:var(--text2)"><strong style="color:var(--text)">'+c.name+'</strong> — '+c.specialty.join(' · ')+'</span></div>';}).join('')+
           '</div>'+
         '</div>'+
         /* 위기상담 */
-        '<div style="display:flex;gap:12px;align-items:center;padding:16px;background:var(--bgSub);border-radius:16px">'+
-          '<span style="width:40px;height:40px;border-radius:12px;background:var(--surface);display:grid;place-items:center;flex-shrink:0;color:var(--coralDeep)">'+ic('i-life','s20')+'</span>'+
+        '<div style="display:flex;gap:12px;align-items:center;padding:16px;background:rgba(255,255,255,.5);border-radius:16px;border:1px solid var(--borderSoft)">'+
+          '<span style="width:40px;height:40px;border-radius:12px;background:var(--coralSoft);display:grid;place-items:center;flex-shrink:0;color:var(--coralDeep)">'+ic('i-life','s20')+'</span>'+
           '<div style="flex:1"><div class="bodyM" style="font-weight:600;color:var(--coralDeep)">지금 많이 힘들다면</div><div class="cap" style="color:var(--text3);margin-top:2px">24시간 위기상담 1393 · 즉시 연결</div></div>'+
           icc('i-phone','s20','color:var(--coralDeep)')+
         '</div>'+
