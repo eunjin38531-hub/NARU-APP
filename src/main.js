@@ -351,71 +351,69 @@ import './index.css';
     statusBar(false,'var(--bgSoft)'); view.style.padding='0';
     var rec=EXPERTS[0];
     var others=EXPERTS.slice(1);
-    /* 공통 상태 텍스트 */
     function availText(c){ return c.avail?'지금 이야기 나눌 수 있어요':'이번 주 시간을 맞춰볼 수 있어요'; }
-    /* 추천 카드 내부 — flex-column gap:16px, 박스 중첩 제거 */
+    /* 추천 카드 내부 — 패딩 16(md), 요소 간 12(sm), 상태→버튼 16(md) */
     function recCardBody(c){
-      return '<div style="display:flex;flex-direction:column;gap:16px">'+
-        /* 프로필 */
-        '<div style="display:flex;gap:12px;align-items:center">'+
+      return '<div style="display:flex;gap:12px;align-items:center">'+
           '<span class="av" style="width:44px;height:44px;font-size:17px;flex-shrink:0">'+c.name.charAt(0)+'</span>'+
           '<div>'+
             '<div class="bodyLm" style="margin-bottom:2px">'+c.name+'</div>'+
             '<div class="cap" style="color:var(--text3)">'+c.role+' · '+c.years+'년 경력</div>'+
           '</div>'+
         '</div>'+
-        /* 한마디 — 박스 없이, 좌측 accent bar로 인용 처리 */
-        '<div style="border-left:3px solid var(--breeze100);padding-left:12px">'+
+        '<div style="border-left:3px solid var(--breeze100);padding-left:12px;margin-top:12px">'+
           '<div class="bodyM" style="color:var(--text2);line-height:1.75">'+c.approach+'</div>'+
         '</div>'+
-        /* 상태 */
-        '<div class="cap" style="color:var(--breezeDeep);font-weight:500">'+availText(c)+'</div>'+
-      '</div>';
+        '<div class="cap" style="color:var(--breezeDeep);font-weight:500;margin-top:8px">'+availText(c)+'</div>';
     }
-    /* 리스트 행 카드 — 동일 구조, 컴팩트 */
+    /* 리스트 행 — 패딩 16(md), 내부 gap 8(xs) */
     function counselRowCard(c, i){
       return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+'>'+
         '<div style="display:flex;align-items:flex-start;gap:12px;padding:16px">'+
           '<span class="av'+(c.coral?' coral':'')+'" style="width:40px;height:40px;font-size:15px;flex-shrink:0;margin-top:2px">'+c.name.charAt(0)+'</span>'+
-          '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">'+
-            '<div>'+
-              '<div class="bodyM" style="font-weight:600;margin-bottom:2px">'+c.name+'</div>'+
-              '<div class="cap" style="color:var(--text3)">'+c.role+' · '+c.years+'년 경력</div>'+
-            '</div>'+
-            '<div class="bodyM" style="color:var(--text2);line-height:1.6">'+c.approach+'</div>'+
+          '<div style="flex:1;min-width:0">'+
+            '<div class="bodyM" style="font-weight:600;margin-bottom:2px">'+c.name+'</div>'+
+            '<div class="cap" style="color:var(--text3);margin-bottom:8px">'+c.role+' · '+c.years+'년 경력</div>'+
+            '<div class="bodyM" style="color:var(--text2);line-height:1.57;margin-bottom:8px">'+c.approach+'</div>'+
             '<div class="cap" style="color:var(--breezeDeep);font-weight:500">'+availText(c)+'</div>'+
           '</div>'+
-          icc('i-right','s18','color:var(--faint);flex-shrink:0;margin-top:12px')+
+          icc('i-right','s20','color:var(--faint);flex-shrink:0;margin-top:10px')+
         '</div>'+
       '</div>';
     }
     view.innerHTML='<div class="view-anim">'+
-      '<div style="padding:47px 16px 12px">'+
+      /* 페이지 헤더 — 상단 48(4xl), 하단 16(md) */
+      '<div style="padding:48px 16px 16px">'+
         '<div class="capm" style="color:var(--text3);margin-bottom:4px">전문가 연결</div>'+
         '<div class="h2">나루가 이어드립니다</div>'+
       '</div>'+
-      '<div style="padding:4px 16px 40px;display:flex;flex-direction:column;gap:12px">'+
-        /* 핸드오프 배너 — 패딩 슬림 */
-        '<div style="background:var(--breeze50);border-radius:14px;padding:12px 16px;display:flex;gap:12px;align-items:center">'+
+      /* 카드 간 간격 16(md), 좌우 마진 16(md) */
+      '<div style="padding:0 16px 40px;display:flex;flex-direction:column;gap:16px">'+
+        /* 핸드오프 배너 — radius 16(lg), 패딩 12(sm) vertical × 16(md) horizontal */
+        '<div style="background:var(--breeze50);border-radius:16px;padding:12px 16px;display:flex;gap:12px;align-items:center">'+
           '<span style="width:32px;height:32px;border-radius:8px;background:var(--breeze100);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s16')+'</span>'+
-          '<div class="bodyM" style="color:var(--breezeDeep)">나루의 기록이 함께 전달돼요 <span style="color:var(--text3);font-weight:400">— 처음부터 다시 설명 안 해도 됩니다</span></div>'+
+          '<div>'+
+            '<div class="bodyM" style="color:var(--breezeDeep);font-weight:500">나루의 기록이 함께 전달돼요</div>'+
+            '<div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명하지 않아도 됩니다</div>'+
+          '</div>'+
         '</div>'+
-        /* 추천 카드 */
-        '<div class="card" style="padding:20px;display:flex;flex-direction:column;gap:16px">'+
-          '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
+        /* 추천 카드 — 패딩 16(md) */
+        '<div class="card" style="padding:16px">'+
+          '<div style="margin-bottom:12px"><span class="tag">'+ic('i-spark','s14')+'나루 추천</span></div>'+
           recCardBody(rec)+
-          '<button class="btn full" data-n="'+rec.name+'">만나보기</button>'+
+          '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px">만나보기</button>'+
         '</div>'+
-        /* 다른 분 */
-        '<div class="capm" style="color:var(--text3);padding:4px 2px 0">다른 분과 이야기하고 싶다면</div>'+
+        /* 섹션 레이블 */
+        '<div class="capm" style="color:var(--text3);padding-top:4px">다른 분과 이야기하고 싶다면</div>'+
+        /* 리스트 카드 — 패딩 0, 내부 row가 16px 처리 */
         '<div class="card" style="overflow:hidden;padding:0">'+
           others.map(counselRowCard).join('')+
         '</div>'+
-        /* 위기상담 */
-        '<div style="display:flex;gap:12px;align-items:center;padding:14px 16px;background:var(--bgSub);border-radius:16px">'+
-          '<span style="width:36px;height:36px;border-radius:10px;background:var(--surface);display:grid;place-items:center;flex-shrink:0;color:var(--coralDeep)">'+ic('i-life','s18')+'</span>'+
-          '<div style="flex:1"><div class="bodyM" style="font-weight:600;color:var(--coralDeep)">지금 많이 힘들다면</div><div class="cap" style="color:var(--text3);margin-top:1px">24시간 위기상담 1393 · 즉시 연결</div></div>'+
-          icc('i-phone','s18','color:var(--coralDeep)')+
+        /* 위기상담 — radius 16(lg), 패딩 16(md), 아이콘 s20 */
+        '<div style="display:flex;gap:12px;align-items:center;padding:16px;background:var(--bgSub);border-radius:16px">'+
+          '<span style="width:40px;height:40px;border-radius:12px;background:var(--surface);display:grid;place-items:center;flex-shrink:0;color:var(--coralDeep)">'+ic('i-life','s20')+'</span>'+
+          '<div style="flex:1"><div class="bodyM" style="font-weight:600;color:var(--coralDeep)">지금 많이 힘들다면</div><div class="cap" style="color:var(--text3);margin-top:2px">24시간 위기상담 1393 · 즉시 연결</div></div>'+
+          icc('i-phone','s20','color:var(--coralDeep)')+
         '</div>'+
         '<div class="cap" style="text-align:center;color:var(--faint);padding:0 8px">나루의 연결은 의료 행위를 대체하지 않으며, 전문가로 이어지는 과정을 돕습니다.</div>'+
       '</div></div>';
