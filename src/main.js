@@ -337,94 +337,104 @@ import './index.css';
 
   /* ============ COUNSEL ============ */
   var EXPERTS=[
-    {name:'이서연',role:'임상심리전문가',
+    {name:'이서연',role:'임상심리전문가',years:8,session:'화상·채팅',
      approach:'조급해하지 않아도 괜찮아요. 마음의 속도를 함께 맞춰가요.',
-     specialty:['불안·걱정','관계 고민','자기 이해'],avail:true,nextSlot:null,coral:false},
-    {name:'정현우',role:'상담심리사 1급',
+     insight:'나루가 기억하는 요즘의 점과 긴장, 이 분과 함께 풀어가기 좋아요.',
+     rating:4.9,reviews:128,avail:true,nextSlot:null,coral:false},
+    {name:'정현우',role:'상담심리사 1급',years:11,session:'화상',
      approach:'판단하지 않고, 있는 그대로 들어드릴게요.',
-     specialty:['감정 정리','번아웃','자존감'],avail:true,nextSlot:null,coral:true},
-    {name:'김도윤',role:'정신건강임상심리사',
+     rating:4.8,reviews:0,avail:true,nextSlot:null,coral:true},
+    {name:'김도윤',role:'정신건강임상심리사',years:6,session:'채팅',
      approach:'작은 변화부터, 일상의 리듬을 함께 회복해요.',
-     specialty:['일상 회복','수면·피로','긴장 완화'],avail:false,nextSlot:'오늘 오후 6시',coral:false}
+     rating:4.9,reviews:0,avail:false,nextSlot:'오늘 오후 4시',coral:false}
   ];
   function renderCounsel(){
-    statusBar(false,'var(--bgSoft)'); view.style.padding='0';
+    statusBar(false,'var(--bg)'); view.style.padding='0';
     var rec=EXPERTS[0];
     var others=EXPERTS.slice(1);
-    /* 전문분야 태그 — 브랜드 뉴트럴 단일 스타일 */
-    function specTag(s){
-      return '<span style="background:var(--bgSub);color:var(--text2);border-radius:6px;padding:2px 8px;font-size:11px;font-weight:500">'+s+'</span>';
+    var filterAvail=false;
+    function avDot(c){
+      if(c.avail) return '<span style="display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:500;color:#2A9060"><span style="width:6px;height:6px;border-radius:50%;background:#2A9060;display:inline-block;flex-shrink:0"></span>지금 가능</span>';
+      return '<span style="font-size:12px;color:var(--text3);font-weight:500">'+c.nextSlot+'</span>';
     }
-    function availBadge(c){
-      if(c.avail) return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;color:var(--breezeDeep)">'+
-        '<span style="width:6px;height:6px;border-radius:50%;background:var(--breezeDeep);display:inline-block"></span>지금 이야기 나눌 수 있어요</span>';
-      return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;color:var(--text3)">'+
-        '<span style="width:6px;height:6px;border-radius:50%;background:var(--faint);display:inline-block"></span>'+(c.nextSlot?'다음 상담 가능: '+c.nextSlot:'이번 주 예약 가능')+'</span>';
+    function star(r){ return '<span style="display:inline-flex;align-items:center;gap:3px;font-size:12px;color:var(--text3)"><span style="color:#F5A623">★</span>'+r+'</span>'; }
+    function avatar(c,size,fsize){ return '<span class="av'+(c.coral?' coral':'')+'" style="width:'+size+'px;height:'+size+'px;font-size:'+fsize+'px;flex-shrink:0">'+c.name.charAt(0)+'</span>'; }
+    function renderList(list){
+      return list.map(function(c,i){
+        return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+' style="cursor:pointer">'+
+          '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px">'+
+            avatar(c,44,16)+
+            '<div style="flex:1;min-width:0">'+
+              '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+
+                '<span class="bodyM" style="font-weight:600">'+c.name+'</span>'+
+                avDot(c)+
+              '</div>'+
+              '<div class="cap" style="color:var(--text3)">'+c.role+' · '+c.years+'년 · '+c.session+'</div>'+
+            '</div>'+
+            star(c.rating)+
+            icc('i-right','s20','color:var(--faint);flex-shrink:0')+
+          '</div>'+
+        '</div>';
+      }).join('');
     }
-    /* 아바타 — .av 브랜드 그라디언트 (이니셜) */
-    function avatar(c,size,fsize){
-      return '<span class="av'+(c.coral?' coral':'')+'" style="width:'+size+'px;height:'+size+'px;font-size:'+fsize+'px;flex-shrink:0">'+c.name.charAt(0)+'</span>';
+    function rebuild(){
+      var filtered=filterAvail?EXPERTS.slice(1).filter(function(c){return c.avail;}):EXPERTS.slice(1);
+      var listEl=document.getElementById('c-list');
+      if(listEl) listEl.innerHTML=renderList(filtered);
+      document.getElementById('c-fall').className='chip sm-chip'+(filterAvail?'':' on');
+      document.getElementById('c-favail').className='chip sm-chip'+(filterAvail?' on':'');
     }
-    view.innerHTML='<div class="view-anim" style="background:var(--bgSoft);min-height:100%">'+
-      /* 헤더 — Naru Breeze 단색 아주 옅은 틴트, 톤온톤 */
-      '<div style="background:radial-gradient(120% 80% at 100% 0%,rgba(83,161,182,.07),transparent 55%),var(--bgSoft);padding:48px 16px 24px">'+
-        '<div class="capm" style="color:var(--text3);margin-bottom:6px">전문가 연결</div>'+
-        '<div class="h2" style="margin-bottom:4px">나루가 이어드립니다</div>'+
-        '<div class="bodyM" style="color:var(--text3);margin-top:4px">처음부터 다시 말하지 않아도 괜찮아요</div>'+
+    view.innerHTML='<div class="view-anim" style="background:var(--bg);min-height:100%">'+
+      /* 헤더 */
+      '<div style="padding:48px 16px 20px">'+
+        '<div class="capm" style="color:var(--text3);margin-bottom:6px">전문가 상담</div>'+
+        '<div class="h2">마음에 맞는 상담사</div>'+
       '</div>'+
       '<div style="padding:0 16px 40px;display:flex;flex-direction:column;gap:16px">'+
         /* 핸드오프 배너 */
-        '<div style="background:var(--breeze50);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center">'+
-          '<span style="width:32px;height:32px;border-radius:8px;background:var(--breeze100);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s16')+'</span>'+
-          '<div>'+
-            '<div class="bodyM" style="color:var(--breezeDeep);font-weight:500">나루의 기록이 함께 전달돼요</div>'+
-            '<div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명하지 않아도 됩니다</div>'+
+        '<div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer">'+
+          '<span style="width:36px;height:36px;border-radius:10px;background:var(--breeze50);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s18')+'</span>'+
+          '<div style="flex:1">'+
+            '<div class="bodyM" style="font-weight:500;color:var(--text)">나루가 기억한 마음, 전문가에게 전하기</div>'+
+            '<div class="cap" style="color:var(--text3);margin-top:1px">처음부터 다시 설명하지 않아도 괜찮아요</div>'+
           '</div>'+
+          icc('i-right','s20','color:var(--faint);flex-shrink:0')+
         '</div>'+
-        /* 추천 카드 — 브랜드 Breeze 좌측 accent border만으로 강조 */
-        '<div>'+
-          '<div class="capm" style="color:var(--text3);margin-bottom:8px">나루의 추천</div>'+
-          '<div class="card" style="padding:16px;border-left:3px solid var(--breeze)">'+
-            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'+
-              '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
-              '<span class="capm" style="color:var(--text3)">나의 기록 기반</span>'+
-            '</div>'+
-            '<div style="display:flex;gap:12px;align-items:center">'+
-              avatar(rec,48,18)+
-              '<div>'+
-                '<div class="bodyLm" style="margin-bottom:2px">'+rec.name+'</div>'+
-                '<div class="cap" style="color:var(--text3)">'+rec.role+'</div>'+
-                '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px">'+rec.specialty.map(specTag).join('')+'</div>'+
+        /* 추천 카드 */
+        '<div class="card" style="padding:16px">'+
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'+
+            '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
+            star(rec.rating)+'<span class="cap" style="color:var(--text3);margin-left:2px">· 후기 '+rec.reviews+'</span>'+
+          '</div>'+
+          '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">'+
+            avatar(rec,44,17)+
+            '<div>'+
+              '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+
+                '<span class="bodyLm">'+rec.name+'</span>'+
+                avDot(rec)+
               '</div>'+
+              '<div class="cap" style="color:var(--text3)">'+rec.role+' · '+rec.years+'년</div>'+
             '</div>'+
-            '<div style="border-left:2px solid var(--breeze100);padding-left:12px;margin-top:12px">'+
-              '<div class="bodyM" style="color:var(--text2);line-height:1.75">'+rec.approach+'</div>'+
-            '</div>'+
-            '<div style="margin-top:8px">'+availBadge(rec)+'</div>'+
-            '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px">만나보기</button>'+
           '</div>'+
+          '<div class="bodyM" style="color:var(--text2);line-height:1.65;margin-bottom:8px">'+rec.approach+'</div>'+
+          '<span style="background:var(--bgSub);color:var(--text2);border-radius:6px;padding:2px 10px;font-size:12px;font-weight:500">'+rec.session+'</span>'+
+          '<div class="cap" style="color:var(--text3);margin-top:12px;line-height:1.6">'+rec.insight+'</div>'+
+          '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px">연결하기</button>'+
         '</div>'+
-        /* 리스트 — 비교 뉘앙스 제거, 감정 접근 중심 */
+        /* 리스트 섹션 */
         '<div>'+
-          '<div class="capm" style="color:var(--text3);margin-bottom:8px">다른 분과 이야기하고 싶다면</div>'+
-          '<div class="card" style="overflow:hidden;padding:0">'+
-            others.map(function(c,i){
-              return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+'>'+
-                '<div style="display:flex;align-items:flex-start;gap:12px;padding:16px">'+
-                  avatar(c,40,16)+
-                  '<div style="flex:1;min-width:0">'+
-                    '<div class="bodyM" style="font-weight:600;margin-bottom:2px">'+c.name+'</div>'+
-                    '<div class="cap" style="color:var(--text3);margin-bottom:6px">'+c.role+'</div>'+
-                    '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px">'+c.specialty.map(specTag).join('')+'</div>'+
-                    availBadge(c)+
-                  '</div>'+
-                  '<button style="border:none;background:none;padding:0;cursor:pointer;color:var(--breezeDeep);font-size:13px;font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:2px">더 보기</button>'+
-                '</div>'+
-              '</div>';
-            }).join('')+
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'+
+            '<span class="bodyLm">다른 상담사</span>'+
+            '<div style="display:flex;gap:6px">'+
+              '<button id="c-fall" class="chip sm-chip on">전체</button>'+
+              '<button id="c-favail" class="chip sm-chip">지금 가능</button>'+
+            '</div>'+
+          '</div>'+
+          '<div class="card" id="c-list" style="overflow:hidden;padding:0">'+
+            renderList(others)+
           '</div>'+
         '</div>'+
-        /* 위기상담 — Coral 10% 포인트 */
+        /* 위기상담 */
         '<div style="display:flex;gap:12px;align-items:center;padding:16px;background:var(--bgSub);border-radius:16px">'+
           '<span style="width:40px;height:40px;border-radius:12px;background:var(--coralSoft);display:grid;place-items:center;flex-shrink:0;color:var(--coralDeep)">'+ic('i-life','s20')+'</span>'+
           '<div style="flex:1"><div class="bodyM" style="font-weight:600;color:var(--coralDeep)">지금 많이 힘들다면</div><div class="cap" style="color:var(--text3);margin-top:2px">24시간 위기상담 1393 · 즉시 연결</div></div>'+
@@ -432,6 +442,8 @@ import './index.css';
         '</div>'+
         '<div class="cap" style="text-align:center;color:var(--faint);padding:0 8px">나루의 연결은 의료 행위를 대체하지 않으며, 전문가로 이어지는 과정을 돕습니다.</div>'+
       '</div></div>';
+    document.getElementById('c-fall').onclick=function(){ filterAvail=false; rebuild(); };
+    document.getElementById('c-favail').onclick=function(){ filterAvail=true; rebuild(); };
   }
 
   /* ============ PROFILE ============ */
