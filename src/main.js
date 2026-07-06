@@ -347,14 +347,11 @@ import './index.css';
      approach:'작은 변화부터, 일상의 리듬을 함께 회복해요.',
      specialty:['일상 회복','수면·피로','긴장 완화'],avail:false}
   ];
-  function availBadge(e){ return e.avail
-    ? '<span class="tag mist" style="font-weight:500">지금 이야기 나눌 수 있어요</span>'
-    : '<span class="tag neutral">이번 주 만나볼 수 있어요</span>'; }
   function renderCounsel(){
     statusBar(false,'var(--bgSoft)'); view.style.padding='0';
     var rec=EXPERTS[0];
     var others=EXPERTS.slice(1);
-    function specTags(list){ return '<div class="cap" style="color:var(--text3);margin-bottom:8px">이런 이야기를 나눠요</div><div style="display:flex;gap:6px;flex-wrap:wrap">'+list.map(function(t){ return '<span style="display:inline-flex;align-items:center;font:500 12px/1 var(--font);padding:6px 10px;border-radius:999px;border:1px solid var(--border);color:var(--text3);background:transparent">'+t+'</span>'; }).join('')+'</div>'; }
+    function availNote(e){ return '<div class="cap" style="color:var(--faint);margin-top:10px">'+(e.avail?'지금 이야기 나눌 수 있어요':'이번 주 시간을 맞춰볼 수 있어요')+'</div>'; }
     view.innerHTML='<div class="view-anim">'+
       '<div style="padding:47px 16px 8px">'+
         '<div class="capm" style="color:var(--text3);margin-bottom:4px">전문가 연결</div>'+
@@ -367,44 +364,46 @@ import './index.css';
           '<div><div class="bodyMm" style="color:var(--breezeDeep)">나루의 기록이 함께 전달돼요</div>'+
           '<div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명하지 않아도 됩니다</div></div>'+
         '</div>'+
-        /* 추천 상담사 — 단일 카드, 평점·후기 없음 */
+        /* 추천 상담사 — 감성 카피 우선, 자격 하단 */
         '<div class="card" style="padding:20px;background:linear-gradient(145deg,var(--breeze50) 0%,var(--surface) 55%)">'+
           '<div style="margin-bottom:16px">'+
             '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
           '</div>'+
-          '<div style="display:flex;gap:14px;align-items:center;margin-bottom:16px">'+
-            '<span class="av" style="width:56px;height:56px">'+rec.name.charAt(0)+'</span>'+
-            '<div><div class="bodyLm" style="margin-bottom:4px">'+rec.name+'</div>'+
-            '<div class="cap" style="color:var(--text3)">'+rec.role+' · '+rec.years+'년 경력</div></div>'+
-          '</div>'+
-          '<div style="background:var(--bgSoft);border-radius:12px;padding:14px;margin-bottom:14px">'+
+          '<div style="background:var(--bgSoft);border-radius:12px;padding:14px;margin-bottom:16px">'+
             '<div class="bodyM" style="color:var(--text2);line-height:1.7">"'+rec.approach+'"</div>'+
           '</div>'+
-          '<div style="margin-bottom:14px">'+specTags(rec.specialty)+'</div>'+
-          availBadge(rec)+
+          '<div style="display:flex;gap:12px;align-items:center;margin-bottom:6px">'+
+            '<span class="av" style="width:44px;height:44px;font-size:16px">'+rec.name.charAt(0)+'</span>'+
+            '<div>'+
+              '<div class="bodyMm" style="margin-bottom:2px">'+rec.name+'</div>'+
+              '<div class="cap" style="color:var(--text3)">'+rec.role+' · '+rec.years+'년 경력</div>'+
+              '<div class="cap" style="color:var(--text3);margin-top:3px">'+rec.specialty.join(', ')+'에 대해 편하게 나눌 수 있어요</div>'+
+            '</div>'+
+          '</div>'+
+          availNote(rec)+
           '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px">만나보기</button>'+
         '</div>'+
-        /* 다른 분 섹션 — 비교 구조 없이 담담하게 */
+        /* 다른 분 섹션 — 한마디 먼저, 자격 아래 */
         '<div class="capm" style="color:var(--text3);padding:4px 4px 0">다른 분과 이야기하고 싶다면</div>'+
         '<div class="card" style="overflow:hidden;padding:0">'+
           others.map(function(c,i){
             return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+'>'+
-              '<div style="display:flex;align-items:flex-start;gap:14px;padding:16px">'+
-                '<span class="av'+(c.coral?' coral':'')+'" style="width:44px;height:44px;font-size:16px">'+c.name.charAt(0)+'</span>'+
+              '<div style="display:flex;align-items:flex-start;gap:12px;padding:16px">'+
+                '<span class="av'+(c.coral?' coral':'')+'" style="width:40px;height:40px;font-size:15px;flex-shrink:0">'+c.name.charAt(0)+'</span>'+
                 '<div style="flex:1;min-width:0">'+
-                  '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px"><span class="bodyMm">'+c.name+'</span>'+availBadge(c)+'</div>'+
-                  '<div class="cap" style="color:var(--text3);margin-bottom:8px">'+c.role+' · '+c.years+'년</div>'+
-                  '<div class="bodyM" style="color:var(--text2)">'+c.approach+'</div>'+
+                  '<div class="bodyMm" style="margin-bottom:6px">'+c.name+'</div>'+
+                  '<div class="bodyM" style="color:var(--text2);margin-bottom:8px">'+c.approach+'</div>'+
+                  '<div class="cap" style="color:var(--faint)">'+c.role+' · '+c.years+'년 · '+(c.avail?'지금 이야기 가능':'이번 주 조율 가능')+'</div>'+
                 '</div>'+
                 icc('i-right','s20','color:var(--faint);flex-shrink:0;align-self:center')+
               '</div>'+
             '</div>';
           }).join('')+
         '</div>'+
-        /* 위기상담 */
-        '<div class="card" style="padding:16px;display:flex;gap:12px;align-items:center;background:var(--coralSoft);border-color:transparent">'+
+        /* 위기상담 — bgSub 배경, 코랄은 아이콘·텍스트만 */
+        '<div class="card" style="padding:16px;display:flex;gap:12px;align-items:center;background:var(--bgSub)">'+
           '<span style="width:40px;height:40px;border-radius:12px;background:var(--surface);display:grid;place-items:center;flex-shrink:0;color:var(--coralDeep)">'+ic('i-life','s20')+'</span>'+
-          '<div style="flex:1"><div class="bodyMm">지금 많이 힘들다면</div><div class="cap" style="color:var(--text2);margin-top:2px">24시간 위기상담 1393 · 즉시 연결</div></div>'+
+          '<div style="flex:1"><div class="bodyMm" style="color:var(--coralDeep)">지금 많이 힘들다면</div><div class="cap" style="color:var(--text3);margin-top:2px">24시간 위기상담 1393 · 즉시 연결</div></div>'+
           '<span style="color:var(--coralDeep)">'+ic('i-phone','s20')+'</span>'+
         '</div>'+
         '<div class="cap" style="text-align:center;color:var(--faint);padding:0 12px">나루의 연결은 의료 행위를 대체하지 않으며, 마음을 정리하고 전문가로 이어지는 과정을 돕습니다.</div>'+
