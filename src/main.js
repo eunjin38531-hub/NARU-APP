@@ -351,56 +351,56 @@ import './index.css';
     statusBar(false,'var(--bgSoft)'); view.style.padding='0';
     var rec=EXPERTS[0];
     var others=EXPERTS.slice(1);
-    function availNote(e){ return '<div class="cap" style="color:var(--faint);margin-top:10px">'+(e.avail?'지금 이야기 나눌 수 있어요':'이번 주 시간을 맞춰볼 수 있어요')+'</div>'; }
+    /* 단일 카드 컴포넌트 — 이름+자격 → 한마디 → 상태, 16px gap 고정 */
+    function counselCard(c, big){
+      var avatarSize = big ? '48px' : '40px';
+      var nameCls = big ? 'bodyLm' : 'bodyM';
+      return '<div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:16px">'+
+        '<span class="av'+(c.coral?' coral':'')+'" style="width:'+avatarSize+';height:'+avatarSize+';font-size:'+(big?'18':'15')+'px;flex-shrink:0">'+c.name.charAt(0)+'</span>'+
+        '<div>'+
+          '<div class="'+nameCls+'" style="font-weight:600;margin-bottom:3px">'+c.name+'</div>'+
+          '<div class="cap" style="color:var(--text3)">'+c.role+' · '+c.years+'년 경력</div>'+
+        '</div>'+
+      '</div>'+
+      '<div style="background:var(--bgSoft);border-radius:12px;padding:14px;margin-bottom:16px">'+
+        '<div class="bodyM" style="color:var(--text2);line-height:1.7">"'+c.approach+'"</div>'+
+      '</div>'+
+      '<div class="cap" style="color:var(--breezeDeep);font-weight:500">'+(c.avail?'지금 이야기 나눌 수 있어요':'이번 주 시간을 맞춰볼 수 있어요')+'</div>';
+    }
+    function counselRowCard(c, i){
+      return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+'>'+
+        '<div style="display:flex;align-items:flex-start;gap:12px;padding:16px">'+
+          '<span class="av'+(c.coral?' coral':'')+'" style="width:40px;height:40px;font-size:15px;flex-shrink:0">'+c.name.charAt(0)+'</span>'+
+          '<div style="flex:1;min-width:0">'+
+            '<div class="bodyM" style="font-weight:600;margin-bottom:3px">'+c.name+'</div>'+
+            '<div class="cap" style="color:var(--text3);margin-bottom:10px">'+c.role+' · '+c.years+'년 경력</div>'+
+            '<div class="bodyM" style="color:var(--text2);margin-bottom:10px">'+c.approach+'</div>'+
+            '<div class="cap" style="color:var(--breezeDeep);font-weight:500">'+(c.avail?'지금 이야기 나눌 수 있어요':'이번 주 시간을 맞춰볼 수 있어요')+'</div>'+
+          '</div>'+
+          icc('i-right','s20','color:var(--faint);flex-shrink:0;margin-top:2px')+
+        '</div>'+
+      '</div>';
+    }
     view.innerHTML='<div class="view-anim">'+
       '<div style="padding:47px 16px 8px">'+
         '<div class="capm" style="color:var(--text3);margin-bottom:4px">전문가 연결</div>'+
         '<div class="h2">나루가 이어드립니다</div>'+
       '</div>'+
       '<div style="padding:8px 16px 40px;display:flex;flex-direction:column;gap:16px">'+
-        /* 따뜻한 핸드오프 안내 */
         '<div style="background:var(--breeze50);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:center">'+
           '<span style="width:36px;height:36px;border-radius:10px;background:var(--breeze100);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-msq','s18')+'</span>'+
           '<div><div class="bodyMm" style="color:var(--breezeDeep)">나루의 기록이 함께 전달돼요</div>'+
           '<div class="cap" style="color:var(--text3);margin-top:2px">처음부터 다시 설명하지 않아도 됩니다</div></div>'+
         '</div>'+
-        /* 추천 상담사 — 감성 카피 우선, 자격 하단 */
         '<div class="card" style="padding:20px;background:linear-gradient(145deg,var(--breeze50) 0%,var(--surface) 55%)">'+
-          '<div style="margin-bottom:16px">'+
-            '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
-          '</div>'+
-          '<div style="background:var(--bgSoft);border-radius:12px;padding:14px;margin-bottom:16px">'+
-            '<div class="bodyM" style="color:var(--text2);line-height:1.7">"'+rec.approach+'"</div>'+
-          '</div>'+
-          '<div style="display:flex;gap:12px;align-items:center;margin-bottom:6px">'+
-            '<span class="av" style="width:44px;height:44px;font-size:16px">'+rec.name.charAt(0)+'</span>'+
-            '<div>'+
-              '<div class="bodyMm" style="margin-bottom:2px">'+rec.name+'</div>'+
-              '<div class="cap" style="color:var(--text3)">'+rec.role+' · '+rec.years+'년 경력</div>'+
-              '<div class="cap" style="color:var(--text3);margin-top:3px">'+rec.specialty.join(', ')+'에 대해 편하게 나눌 수 있어요</div>'+
-            '</div>'+
-          '</div>'+
-          availNote(rec)+
+          '<div style="margin-bottom:16px"><span class="tag">'+ic('i-spark','s14')+'나루 추천</span></div>'+
+          counselCard(rec, true)+
           '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px">만나보기</button>'+
         '</div>'+
-        /* 다른 분 섹션 — 한마디 먼저, 자격 아래 */
         '<div class="capm" style="color:var(--text3);padding:4px 4px 0">다른 분과 이야기하고 싶다면</div>'+
         '<div class="card" style="overflow:hidden;padding:0">'+
-          others.map(function(c,i){
-            return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+'>'+
-              '<div style="display:flex;align-items:flex-start;gap:12px;padding:16px">'+
-                '<span class="av'+(c.coral?' coral':'')+'" style="width:40px;height:40px;font-size:15px;flex-shrink:0">'+c.name.charAt(0)+'</span>'+
-                '<div style="flex:1;min-width:0">'+
-                  '<div class="bodyMm" style="margin-bottom:6px">'+c.name+'</div>'+
-                  '<div class="bodyM" style="color:var(--text2);margin-bottom:8px">'+c.approach+'</div>'+
-                  '<div class="cap" style="color:var(--faint)">'+c.role+' · '+c.years+'년 · '+(c.avail?'지금 이야기 가능':'이번 주 조율 가능')+'</div>'+
-                '</div>'+
-                icc('i-right','s20','color:var(--faint);flex-shrink:0;align-self:center')+
-              '</div>'+
-            '</div>';
-          }).join('')+
+          others.map(counselRowCard).join('')+
         '</div>'+
-        /* 위기상담 — bgSub 배경, 코랄은 아이콘·텍스트만 */
         '<div class="card" style="padding:16px;display:flex;gap:12px;align-items:center;background:var(--bgSub)">'+
           '<span style="width:40px;height:40px;border-radius:12px;background:var(--surface);display:grid;place-items:center;flex-shrink:0;color:var(--coralDeep)">'+ic('i-life','s20')+'</span>'+
           '<div style="flex:1"><div class="bodyMm" style="color:var(--coralDeep)">지금 많이 힘들다면</div><div class="cap" style="color:var(--text3);margin-top:2px">24시간 위기상담 1393 · 즉시 연결</div></div>'+
