@@ -416,10 +416,8 @@ import './index.css';
               '<div class="cap" style="color:var(--text3)">'+rec.role+' · '+rec.years+'년</div>'+
             '</div>'+
           '</div>'+
-          '<div class="bodyM" style="color:var(--text2);line-height:1.65;margin-bottom:8px">'+rec.approach+'</div>'+
-          '<span style="background:var(--bgSub);color:var(--text2);border-radius:6px;padding:2px 10px;font-size:12px;font-weight:500">'+rec.session+'</span>'+
-          '<div class="cap" style="color:var(--text3);margin-top:12px;line-height:1.6">'+rec.insight+'</div>'+
-          '<button class="btn full" data-n="'+rec.name+'" style="margin-top:16px">연결하기</button>'+
+          '<div class="bodyM" style="color:var(--text2);line-height:1.65;margin-bottom:16px">'+rec.approach+'</div>'+
+          '<button class="btn full" data-n="'+rec.name+'">연결하기</button>'+
         '</div>'+
         /* 리스트 섹션 */
         '<div>'+

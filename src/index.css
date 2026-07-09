@@ -3,7 +3,7 @@
   --mist:#7BBCC5; --mist100:#DFEFF1; --coral:#FF8E73; --coralDeep:#DB7962; --coralSoft:#FFE7E0; --oatSoft:#F6F0EA;
   --text:#1E293B; --text2:#475569; --text3:#64748B; --faint:#94A3B8;
   --bg:#FFFFFF; --bgSoft:#F8FAFC; --bgSub:#F1F5F9; --border:#E6ECF1; --borderSoft:#EEF2F6; --surface:#fff;
-  --shadowSoft:0 2px 14px -6px rgba(30,41,59,.12);
+  --shadowSoft:0 1px 6px -2px rgba(30,41,59,.07);
   --font:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
 }
 .dark{
