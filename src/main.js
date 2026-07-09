@@ -404,7 +404,7 @@ import './index.css';
         '<div class="card" style="padding:16px">'+
           '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'+
             '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
-            star(rec.rating)+'<span class="cap" style="color:var(--text3);margin-left:2px">· 후기 '+rec.reviews+'</span>'+
+            '<div style="display:inline-flex;align-items:center;gap:4px">'+star(rec.rating)+'<span class="cap" style="color:var(--text3)">· 후기 '+rec.reviews+'</span></div>'+
           '</div>'+
           '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">'+
             avatar(rec,44,17)+
@@ -417,7 +417,7 @@ import './index.css';
             '</div>'+
           '</div>'+
           '<div class="bodyM" style="color:var(--text2);line-height:1.65;margin-bottom:16px">'+rec.approach+'</div>'+
-          '<button class="btn full" data-n="'+rec.name+'">연결하기</button>'+
+          '<button class="btn full md" data-n="'+rec.name+'">연결하기</button>'+
         '</div>'+
         /* 리스트 섹션 */
         '<div>'+
