@@ -52,10 +52,10 @@ import './index.css';
     statusBar(true, 'var(--breeze)'); tabbar.style.display='none';
     view.style.padding='0';
     view.innerHTML =
-      '<div class="wave view-anim" style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:44px;padding:48px 32px;background:linear-gradient(160deg,var(--breeze),var(--mist) 72%,var(--breeze50))">'+
+      '<div class="wave view-anim" style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px;padding:48px 32px;background:linear-gradient(160deg,var(--breeze),var(--mist) 72%,var(--breeze50))">'+
         '<div class="inner" style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">'+
           '<img src="'+'/NARU-APP/naru-logo.png'+'" alt="naru" style="width:176px;height:auto;object-fit:contain"/>'+
-          '<div class="title" style="font-weight:500;color:rgba(255,255,255,.95)">마음이 흐르는 곳, 나루</div>'+
+          '<div class="bodyL" style="color:rgba(255,255,255,.95)">마음이 흐르는 곳, 나루</div>'+
         '</div>'+
         '<div class="inner" style="width:100%;display:flex;flex-direction:column;gap:12px">'+
           '<button class="btn full" id="b-start" style="background:#fff;color:var(--breezeDeep)">시작하기</button>'+
@@ -73,7 +73,7 @@ import './index.css';
     view.innerHTML =
       '<div class="view-anim" style="flex:1;display:flex;flex-direction:column;background:var(--bg)">'+
         '<div style="padding:48px 20px 12px;display:flex;justify-content:space-between;align-items:center">'+
-          '<div style="display:flex;gap:7px">'+dots+'</div>'+
+          '<div style="display:flex;gap:8px">'+dots+'</div>'+
           '<button class="bodyMm" id="b-skip" style="border:none;background:none;color:var(--text3);cursor:pointer">건너뛰기</button>'+
         '</div>'+
         '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:0 28px">'+
@@ -116,8 +116,8 @@ import './index.css';
       var selBg = on ? (S.dark ? m.tone+'33' : m.soft) : 'var(--surface)';
       var selText = on && S.dark ? m.tone : 'var(--text)';
       rows+='<button class="moodbtn pick" data-k="'+m.k+'" style="flex-direction:row;gap:16px;padding:12px 16px;border-radius:16px;border:1px solid '+(on?m.tone:'var(--border)')+';background:'+selBg+';width:100%">'+
-        '<span class="mood" style="width:44px;height:44px;background:'+(on?m.tone:(S.dark?m.tone+'30':m.soft))+';'+(on?'box-shadow:0 8px 20px -6px '+m.tone+'88':'')+'">'+faceSvg(m,44,on?'#fff':m.tone)+'</span>'+
-        '<span class="bodyL" style="font-weight:600;color:'+selText+'">'+m.label+'</span></button>';
+        '<span class="mood" style="width:44px;height:44px;background:'+(on?m.tone:(S.dark?m.tone+'30':m.soft))+';'+(on?'transform:scale(1.06)':'')+'">'+faceSvg(m,44,on?'#fff':m.tone)+'</span>'+
+        '<span class="bodyLm" style="color:'+selText+'">'+m.label+'</span></button>';
     });
     view.innerHTML =
       '<div class="view-anim" style="flex:1;display:flex;flex-direction:column;background:var(--bg)">'+
@@ -149,14 +149,14 @@ import './index.css';
     ok:'그저 그런 날도 소중해요. 무리하지 않아도 괜찮아요.',
     down:'조금 힘든 하루였군요. 그 마음, 흘려보내도 괜찮아요.',
     bad:'많이 지친 하루네요. 오늘은 나에게 가장 다정해도 좋아요.'};
-  function careCard(icn,t,sub){ return '<div class="card" style="padding:14px;min-width:148px;flex-shrink:0"><span style="width:38px;height:38px;border-radius:12px;background:var(--breeze50);display:grid;place-items:center;color:var(--breezeDeep);margin-bottom:12px">'+ic(icn,'s20')+'</span><div class="bodyMm">'+t+'</div><div class="cap" style="color:var(--text3);margin-top:3px">'+sub+'</div></div>'; }
+  function careCard(icn,t,sub){ return '<div class="card" style="padding:16px;min-width:148px;flex-shrink:0"><span style="width:38px;height:38px;border-radius:12px;background:var(--breeze50);display:grid;place-items:center;color:var(--breezeDeep);margin-bottom:12px">'+ic(icn,'s20')+'</span><div class="bodyMm">'+t+'</div><div class="cap" style="color:var(--text3);margin-top:3px">'+sub+'</div></div>'; }
   function renderHome(){
     statusBar(true, 'var(--breeze)'); view.style.padding='0';
     var m = mood(S.mood);
     var hr=new Date().getHours();
     var greet = hr<12?'좋은 아침이에요':hr<18?'좋은 오후예요':'편안한 저녁이에요';
     var faces = MOODS.map(function(x){ var on=S.mood===x.k; var cirBg=on?x.tone:(S.dark?x.tone+'30':x.soft);
-      return '<button class="moodbtn hmood" data-k="'+x.k+'"><span class="mood" style="width:52px;height:52px;background:'+cirBg+';'+(on?'box-shadow:0 8px 20px -6px '+x.tone+'88;transform:scale(1.06)':'')+'">'+faceSvg(x,52,on?'#fff':x.tone)+'</span><span class="cap" style="color:var(--text3);margin-top:2px">'+({'great':'좋아요','good':'좋아요','ok':'그저','down':'힘들어','bad':'지쳐요'}[x.k]||x.label.slice(0,3))+'</span></button>';
+      return '<button class="moodbtn hmood" data-k="'+x.k+'"><span class="mood" style="width:52px;height:52px;background:'+cirBg+';'+(on?'transform:scale(1.08)':'')+'">'+faceSvg(x,52,on?'#fff':x.tone)+'</span><span class="cap" style="color:var(--text3);margin-top:2px">'+({'great':'최고야','good':'좋아요','ok':'그저','down':'힘들어','bad':'지쳐요'}[x.k]||x.label.slice(0,3))+'</span></button>';
     }).join('');
     var checkin = S.checked ?
       '<div class="card" style="padding:16px">'+
@@ -165,7 +165,7 @@ import './index.css';
           '<div style="flex:1"><div class="capm" style="color:var(--text3);margin-bottom:4px">오늘의 마음</div><div class="title">'+m.label+'</div></div>'+
           '<button id="h-edit" class="capm" style="border:none;background:none;color:var(--text3);cursor:pointer;padding:6px 4px;flex-shrink:0">다시 고르기</button>'+
         '</div>'+
-        '<div class="bodyM" style="color:var(--text2);margin-top:14px;padding-top:14px;border-top:1px solid var(--borderSoft)">'+AFF[S.mood]+'</div>'+
+        '<div class="bodyM" style="color:var(--text2);margin-top:16px;padding-top:16px;border-top:1px solid var(--borderSoft)">'+AFF[S.mood]+'</div>'+
       '</div>' :
       '<div class="card" style="padding:16px">'+
         '<div class="title" style="margin-bottom:4px">오늘 마음은 어떤가요?</div>'+
@@ -221,6 +221,8 @@ import './index.css';
     var body = S.recSeg==='log' ? recLog() : recAnalysis();
     view.innerHTML='<div class="view-anim" style="position:relative;min-height:100%">'+head+seg+body+'</div>';
     Array.prototype.forEach.call(view.querySelectorAll('[data-seg]'),function(b){ b.onclick=function(){ S.recSeg=b.getAttribute('data-seg'); renderRecord(); }; });
+    var rfall=document.getElementById('rf-all'),rfgood=document.getElementById('rf-good'),rfhard=document.getElementById('rf-hard');
+    if(rfall){ [rfall,rfgood,rfhard].forEach(function(b){ b.onclick=function(){ rfall.className='chip'+(b===rfall?' on':''); rfgood.className='chip'+(b===rfgood?' on':''); rfhard.className='chip'+(b===rfhard?' on':''); }; }); }
     var fab=document.getElementById('fab');
     if(S.recSeg==='log'){
       fab.style.display='grid';
@@ -233,7 +235,7 @@ import './index.css';
     var sheetMood='ok', txt='';
     var ov=document.createElement('div');
     ov.style.cssText='position:absolute;inset:0;background:rgba(15,23,42,.4);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;align-items:flex-end;z-index:40';
-    function faces(){ return MOODS.map(function(x){ var on=sheetMood===x.k; var circleBg=on?x.tone:(S.dark?x.tone+'30':x.soft); var faceCol=on?'#fff':(S.dark?x.tone:x.tone); return '<button class="moodbtn cmf" data-k="'+x.k+'"><span class="mood" style="width:48px;height:48px;background:'+circleBg+';'+(on?'box-shadow:0 8px 18px -6px '+x.tone+'88;transform:scale(1.06)':'')+'">'+faceSvg(x,48,faceCol)+'</span></button>'; }).join(''); }
+    function faces(){ return MOODS.map(function(x){ var on=sheetMood===x.k; var circleBg=on?x.tone:(S.dark?x.tone+'30':x.soft); var faceCol=on?'#fff':x.tone; return '<button class="moodbtn cmf" data-k="'+x.k+'"><span class="mood" style="width:48px;height:48px;background:'+circleBg+';'+(on?'transform:scale(1.06)':'')+'">'+faceSvg(x,48,faceCol)+'</span></button>'; }).join(''); }
     function paint(){
       ov.innerHTML='<div style="width:100%;background:var(--surface);border-radius:24px 24px 0 0;padding:12px 20px 24px;animation:up .3s cubic-bezier(.22,1,.36,1)">'+
         '<div style="width:40px;height:5px;border-radius:999px;background:var(--border);margin:0 auto 16px"></div>'+
@@ -255,7 +257,7 @@ import './index.css';
     paint();
     var ta=ov.querySelector('#c-txt'); if(ta) ta.focus();
   }
-  function dayCell(d,mk,n,today){ var m=mood(mk); return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0;border-radius:16px;'+(today?'background:var(--breeze100)':'')+'"><span class="cap" style="color:var(--text3)">'+d+'</span><span class="mood" style="width:26px;height:26px;background:'+m.tone+'">'+faceSvg(m,26)+'</span><span class="bodyMm" style="color:'+(today?'var(--breezeDeep)':'var(--text2)')+';font-weight:'+(today?700:500)+'">'+n+'</span></div>'; }
+  function dayCell(d,mk,n,today){ var m=mood(mk); return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0;border-radius:16px;'+(today?'background:var(--breeze100)':'')+'"><span class="cap" style="color:var(--text3)">'+d+'</span><span class="mood" style="width:26px;height:26px;background:'+m.tone+'">'+faceSvg(m,26)+'</span><span class="bodyMm" style="color:'+(today?'var(--breezeDeep)':'var(--text2)')+'">'+n+'</span></div>'; }
   function entry(mk,label,time,text,tags){ var m=mood(mk); return '<div class="card" style="padding:16px;margin-bottom:12px"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><span class="mood" style="width:36px;height:36px;background:'+m.tone+'">'+faceSvg(m,36)+'</span><div style="flex:1"><div class="bodyMm">'+label+'</div></div><span class="cap" style="color:var(--faint)">'+time+'</span></div><div class="bodyM" style="color:var(--text2);margin-bottom:12px">'+text+'</div><div style="display:flex;gap:8px">'+tags.map(function(t){return '<span class="tag oat">#'+t+'</span>';}).join('')+'</div></div>'; }
   function recLog(){
     var userToday = S.entries.map(function(e){ return entry(e.mood,e.label,e.time,e.text,e.tags); }).join('');
@@ -265,7 +267,7 @@ import './index.css';
       icc('i-plus','s20','color:var(--breezeDeep)')+'</button>';
     return '<div style="display:flex;gap:8px;padding:12px 16px 8px">'+
       dayCell('월','good',22)+dayCell('화','ok',23)+dayCell('수','down',24)+dayCell('목','ok',25)+dayCell('금','great',26)+dayCell('토','good',27)+dayCell('일','good',28,true)+'</div>'+
-      '<div style="display:flex;gap:8px;padding:8px 16px 4px;overflow:hidden"><span class="chip on">전체</span><span class="chip">좋았던 날</span><span class="chip">힘들었던 날</span></div>'+
+      '<div style="display:flex;gap:8px;padding:8px 16px 4px;overflow:hidden"><button class="chip on" id="rf-all">전체</button><button class="chip" id="rf-good">좋았던 날</button><button class="chip" id="rf-hard">힘들었던 날</button></div>'+
       '<div style="padding:12px 16px 96px">'+addCard+'<div class="bodyMm" style="color:var(--text3);padding:0 4px 12px">오늘 · 5월 28일</div>'+
         userToday+
         entry('good','좋아요','오후 2:14','발표를 무사히 끝냈다. 생각보다 떨지 않아서 다행이었어. 끝나고 나니 몸에 힘이 쭉 빠졌다.',['성취','안도'])+
@@ -320,7 +322,7 @@ import './index.css';
           '<div style="flex-shrink:0;padding-bottom:8px">'+
             '<div style="display:flex;gap:8px;padding:8px 16px 12px;overflow-x:auto"><button class="chip sug">아직 좀 무거워요</button><button class="chip sug">조금 나아졌어요</button><button class="chip sug">그냥 들어주세요</button></div>'+
             '<div style="padding:0 16px;display:flex;align-items:flex-end;gap:10px">'+
-              '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:0 16px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:14px 0"/></div>'+
+              '<div style="flex:1;min-width:0;display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:0 16px"><input id="msg" placeholder="마음에 떠오르는 대로 적어보세요" style="flex:1;min-width:0;width:100%;border:none;outline:none;background:transparent;font:400 16px/1.4 var(--font);color:var(--text);padding:12px 0"/></div>'+
               '<button id="send" style="width:48px;height:48px;border-radius:50%;background:var(--breeze);border:none;display:grid;place-items:center;color:#fff;cursor:pointer;flex-shrink:0;box-shadow:var(--shadowSoft)">'+ic('i-aup','s24')+'</button>'+
             '</div>'+
           '</div>'+
@@ -330,7 +332,7 @@ import './index.css';
       function send(text){ text=(text||inp.value).trim(); if(!text||S.typing) return; inp.value=''; S.msgs.push({who:'me',text:text}); S.typing=true; inp.disabled=true; inp.style.opacity='.5';
         scroll.appendChild(msgNode({who:'me',text:text}));
         var typingEl=document.createElement('div'); typingEl.id='typing-indicator';
-        typingEl.style.cssText='align-self:flex-start;display:flex;gap:5px;padding:14px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft)';
+        typingEl.style.cssText='align-self:flex-start;display:flex;gap:5px;padding:12px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft)';
         typingEl.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s 0s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .18s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .36s infinite"></span>';
         scroll.appendChild(typingEl); scroll.scrollTop=scroll.scrollHeight;
         setTimeout(function(){ var ti=document.getElementById('typing-indicator'); if(ti) ti.remove();
@@ -371,7 +373,7 @@ import './index.css';
     function renderList(list){
       return list.map(function(c,i){
         return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+' style="cursor:pointer">'+
-          '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px">'+
+          '<div style="display:flex;align-items:center;gap:12px;padding:16px">'+
             avatar(c,44,16)+
             '<div style="flex:1;min-width:0">'+
               '<div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">'+
@@ -411,7 +413,7 @@ import './index.css';
         '</div>'+
         /* 추천 카드 */
         '<div class="card" style="padding:16px">'+
-          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'+
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">'+
             '<span class="tag">'+ic('i-spark','s14')+'나루 추천</span>'+
             '<div style="display:inline-flex;align-items:center;gap:4px">'+star(rec.rating)+(rec.reviews>0?'<span class="cap" style="color:var(--text3)">· 후기 '+rec.reviews+'</span>':'')+'</div>'+
           '</div>'+
@@ -456,7 +458,7 @@ import './index.css';
   /* ============ PROFILE ============ */
   function renderProfile(){
     statusBar(true, 'var(--breeze)'); view.style.padding='0';
-    function row(icn,label,sub,hl){ return '<div class="row"><span class="rowic"'+(hl?' style="background:var(--coralSoft);color:var(--coralDeep)"':'')+'>'+ic(icn,'s20')+'</span><div style="flex:1"><div class="bodyL"'+(hl?' style="color:var(--coralDeep);font-weight:500"':'')+'>'+label+'</div></div>'+(sub?'<span class="bodyM" style="color:var(--faint)">'+sub+'</span>':'')+icc('i-right','s20','color:var(--faint)')+'</div>'; }
+    function row(icn,label,sub,hl){ return '<div class="row"><span class="rowic"'+(hl?' style="background:var(--coralSoft);color:var(--coralDeep)"':'')+'>'+ic(icn,'s20')+'</span><div style="flex:1"><div class="'+(hl?'bodyMm" style="color:var(--coralDeep)':'bodyL"')+'>'+label+'</div></div>'+(sub?'<span class="bodyM" style="color:var(--faint)">'+sub+'</span>':'')+icc('i-right','s20','color:var(--faint)')+'</div>'; }
     view.innerHTML='<div class="view-anim" style="background:var(--bgSoft);min-height:100%">'+
       '<div class="wave"><span class="glow"></span><div class="inner" style="padding:48px 20px 32px;display:flex;align-items:center;gap:16px">'+
         '<span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;flex-shrink:0;box-shadow:var(--shadowSoft)"><span class="h2" style="color:#fff">'+S.name.charAt(0)+'</span></span>'+
