@@ -32,7 +32,6 @@ import './index.css';
     if(m.k==='bad')   return o+'<path d="M11,18 Q16,25 21,18"/><path d="M27,18 Q32,25 37,18"/><path d="M9,37 Q24,24 39,37"/><circle cx="19" cy="27" r="2.5" fill="'+stroke+'" stroke="none"/>'+c;
     return o+'<circle cx="16" cy="19" r="2.5" fill="'+stroke+'" stroke="none"/><circle cx="32" cy="19" r="2.5" fill="'+stroke+'" stroke="none"/><line x1="14" y1="32" x2="34" y2="32"/>'+c;
   }
-  function statusBar(){ }
   var REPLIES = [
     "그랬군요. 그 마음, 충분히 그럴 수 있어요. 조금 더 들려주실래요?",
     "이야기해줘서 고마워요. 그 순간 가장 크게 느껴진 감정은 무엇이었나요?",
@@ -40,6 +39,7 @@ import './index.css';
     "그 감정을 흘려보내도 괜찮아요. 잠시 같이 숨을 골라볼까요?"
   ];
   var replyI = 0;
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
   /* ============ ONBOARDING ============ */
   var SLIDES = [
@@ -49,11 +49,11 @@ import './index.css';
   ];
 
   function renderSplash(){
-    statusBar(true, 'var(--breeze)'); tabbar.style.display='none';
+    tabbar.style.display='none';
     view.style.padding='0';
     view.innerHTML =
       '<div class="wave view-anim" style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px;padding:48px 32px;background:linear-gradient(160deg,var(--breeze),var(--mist) 72%,var(--breeze50))">'+
-        '<div class="inner" style="display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">'+
+        '<div class="inner" style="display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center">'+
           '<img src="'+'/NARU-APP/naru-logo.png'+'" alt="naru" style="width:176px;height:auto;object-fit:contain"/>'+
           '<div class="bodyL" style="color:rgba(255,255,255,.95)">마음이 흐르는 곳, 나루</div>'+
         '</div>'+
@@ -67,7 +67,7 @@ import './index.css';
   }
 
   function renderSlides(){
-    statusBar(false, 'var(--bg)'); tabbar.style.display='none'; view.style.padding='0';
+    tabbar.style.display='none'; view.style.padding='0';
     var s = SLIDES[S.slide];
     var dots=''; for(var i=0;i<SLIDES.length;i++){ dots+='<span style="height:7px;border-radius:999px;width:'+(i===S.slide?'22px':'7px')+';background:'+(i===S.slide?'var(--breeze)':'var(--border)')+';transition:all .26s"></span>'; }
     view.innerHTML =
@@ -90,14 +90,14 @@ import './index.css';
   }
 
   function renderName(){
-    statusBar(false, 'var(--bg)'); tabbar.style.display='none'; view.style.padding='0';
+    tabbar.style.display='none'; view.style.padding='0';
     view.innerHTML =
       '<div class="view-anim" style="flex:1;display:flex;flex-direction:column;background:var(--bg)">'+
         '<div style="padding:48px 20px 8px"><button id="b-back" style="border:none;background:none;cursor:pointer;color:var(--text2)">'+ic('i-left','s24')+'</button></div>'+
         '<div style="flex:1;padding:20px 24px">'+
           '<div class="h2" style="margin-bottom:12px">어떻게 불러드리면<br>좋을까요?</div>'+
           '<div class="bodyL" style="color:var(--text3);margin-bottom:32px">편하게 불릴 이름이나 별명을 알려주세요.</div>'+
-          '<input id="nm" placeholder="예) 지민" value="'+(S.name||'')+'" style="width:100%;box-sizing:border-box;border:none;border-bottom:2px solid var(--breeze);padding:10px 0;font:700 24px/1.3 var(--font);color:var(--text);background:transparent;outline:none"/>'+
+          '<input id="nm" placeholder="예) 지민" value="'+(S.name||'')+'" style="width:100%;box-sizing:border-box;border:none;border-bottom:2px solid var(--breeze);padding:12px 0;font:700 24px/1.3 var(--font);color:var(--text);background:transparent;outline:none"/>'+
         '</div>'+
         '<div style="padding:0 24px 48px"><button class="btn full" id="b-next" disabled>다음</button></div>'+
       '</div>';
@@ -109,7 +109,7 @@ import './index.css';
   }
 
   function renderMoodPick(){
-    statusBar(false, 'var(--bg)'); tabbar.style.display='none'; view.style.padding='0';
+    tabbar.style.display='none'; view.style.padding='0';
     var rows='';
     MOODS.forEach(function(m){
       var on = S.mood===m.k;
@@ -122,7 +122,7 @@ import './index.css';
     view.innerHTML =
       '<div class="view-anim" style="flex:1;display:flex;flex-direction:column;background:var(--bg)">'+
         '<div style="flex:1;padding:48px 24px 0">'+
-          '<div class="h2" style="margin-bottom:12px">'+S.name+'님, 반가워요.<br>지금 마음은 어떤가요?</div>'+
+          '<div class="h2" style="margin-bottom:12px">'+esc(S.name)+'님, 반가워요.<br>지금 마음은 어떤가요?</div>'+
           '<div class="bodyL" style="color:var(--text3);margin-bottom:32px">첫 마음을 기록하며 나루와 시작해볼까요.</div>'+
           '<div style="display:flex;flex-direction:column;gap:12px">'+rows+'</div>'+
         '</div>'+
@@ -151,7 +151,7 @@ import './index.css';
     bad:'많이 지친 하루네요. 오늘은 나에게 가장 다정해도 좋아요.'};
   function careCard(icn,t,sub){ return '<div class="card" style="padding:16px;min-width:148px;flex-shrink:0"><span style="width:38px;height:38px;border-radius:12px;background:var(--breeze50);display:grid;place-items:center;color:var(--breezeDeep);margin-bottom:12px">'+ic(icn,'s20')+'</span><div class="bodyMm">'+t+'</div><div class="cap" style="color:var(--text3);margin-top:3px">'+sub+'</div></div>'; }
   function renderHome(){
-    statusBar(true, 'var(--breeze)'); view.style.padding='0';
+    view.style.padding='0';
     var m = mood(S.mood);
     var hr=new Date().getHours();
     var greet = hr<12?'좋은 아침이에요':hr<18?'좋은 오후예요':'편안한 저녁이에요';
@@ -160,7 +160,7 @@ import './index.css';
     }).join('');
     var checkin = S.checked ?
       '<div class="card" style="padding:16px">'+
-        '<div style="display:flex;align-items:center;gap:14px">'+
+        '<div style="display:flex;align-items:center;gap:12px">'+
           '<span class="mood" style="width:56px;height:56px;background:'+m.tone+'">'+faceSvg(m,56)+'</span>'+
           '<div style="flex:1"><div class="capm" style="color:var(--text3);margin-bottom:4px">오늘의 마음</div><div class="title">'+m.label+'</div></div>'+
           '<button id="h-edit" class="capm" style="border:none;background:none;color:var(--text3);cursor:pointer;padding:6px 4px;flex-shrink:0">다시 고르기</button>'+
@@ -177,7 +177,7 @@ import './index.css';
         '<div class="wave"><span class="glow"></span>'+
           '<svg viewBox="0 0 390 200" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-1px;width:100%;height:96px;opacity:.4"><path d="M0,150 C70,110 160,180 250,140 C320,108 360,150 390,128 L390,200 L0,200 Z" fill="rgba(255,255,255,.4)"/></svg>'+
           '<div class="inner" style="padding:48px 20px 72px;display:flex;justify-content:space-between;align-items:flex-start">'+
-            '<div><div class="bodyMm" style="color:rgba(255,255,255,.9);margin-bottom:8px">'+greet+'</div><div class="h1" style="color:#fff">'+S.name+'님,<br>오늘도 곁에 있을게요</div></div>'+
+            '<div><div class="bodyMm" style="color:rgba(255,255,255,.9);margin-bottom:8px">'+greet+'</div><div class="h1" style="color:#fff">'+esc(S.name)+'님,<br>오늘도 곁에 있을게요</div></div>'+
             '<button id="h-bell" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.22);border:none;display:grid;place-items:center;color:#fff;cursor:pointer;position:relative">'+ic('i-bell','s24')+'<span style="position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:var(--coral);border:2px solid var(--breeze)"></span></button>'+
           '</div>'+
         '</div>'+
@@ -215,7 +215,7 @@ import './index.css';
 
   /* ============ RECORD ============ */
   function renderRecord(){
-    statusBar(false, 'var(--bg)'); view.style.padding='0';
+    view.style.padding='0';
     var seg='<div style="padding:12px 16px 4px"><div class="seg"><button data-seg="log" class="'+(S.recSeg==='log'?'on':'')+'">기록</button><button data-seg="analysis" class="'+(S.recSeg==='analysis'?'on':'')+'">분석</button></div></div>';
     var head='<div style="padding:48px 16px 4px"><div class="capm" style="color:var(--text3);margin-bottom:4px">5월 · 2026</div><div class="h2">마음 기록</div></div>';
     var body = S.recSeg==='log' ? recLog() : recAnalysis();
@@ -261,7 +261,7 @@ import './index.css';
   function entry(mk,label,time,text,tags){ var m=mood(mk); return '<div class="card" style="padding:16px;margin-bottom:12px"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><span class="mood" style="width:36px;height:36px;background:'+m.tone+'">'+faceSvg(m,36)+'</span><div style="flex:1"><div class="bodyMm">'+label+'</div></div><span class="cap" style="color:var(--faint)">'+time+'</span></div><div class="bodyM" style="color:var(--text2);margin-bottom:12px">'+text+'</div><div style="display:flex;gap:8px">'+tags.map(function(t){return '<span class="tag oat">#'+t+'</span>';}).join('')+'</div></div>'; }
   function recLog(){
     var userToday = S.entries.map(function(e){ return entry(e.mood,e.label,e.time,e.text,e.tags); }).join('');
-    var addCard = '<button id="rec-add" style="width:100%;display:flex;align-items:center;gap:12px;padding:16px;margin-bottom:16px;border-radius:16px;border:1.5px dashed var(--breeze);background:var(--breeze50);cursor:pointer;text-align:left">'+
+    var addCard = '<button id="rec-add" style="width:100%;display:flex;align-items:center;gap:12px;padding:16px;margin-bottom:16px;border-radius:16px;border:2px dashed var(--breeze);background:var(--breeze50);cursor:pointer;text-align:left">'+
       '<span style="width:40px;height:40px;border-radius:12px;background:var(--breeze);display:grid;place-items:center;flex-shrink:0;color:#fff">'+ic('i-pencil','s20')+'</span>'+
       '<div style="flex:1"><div class="bodyMm" style="color:var(--breezeDeep)">오늘의 마음을 기록해보세요</div><div class="cap" style="color:var(--text3);margin-top:2px">떠오르는 대로 적어도 괜찮아요</div></div>'+
       icc('i-plus','s20','color:var(--breezeDeep)')+'</button>';
@@ -293,19 +293,19 @@ import './index.css';
   function msgNode(m){
     var el=document.createElement('div');
     if(m.who==='me'){
-      el.style.cssText='align-self:flex-end;max-width:82%;padding:12px 16px;border-radius:20px 20px 6px 20px;background:var(--breeze);color:#fff';
+      el.style.cssText='align-self:flex-end;max-width:82%;padding:12px 16px;border-radius:16px 16px 4px 16px;background:var(--breeze);color:#fff';
       el.innerHTML='<span class="bodyL">'+m.text+'</span>';
     } else {
       el.style.cssText='align-self:flex-start;display:flex;flex-direction:column;max-width:82%';
       var mem=m.mem?'<span style="display:inline-flex;align-items:center;gap:5px;align-self:flex-start;background:var(--breeze100);color:var(--breezeDeep);padding:4px 8px;border-radius:999px;margin-bottom:4px" class="capm">'+ic('i-spark','s14')+'지난 대화를 기억하고 있어요</span>':'';
-      el.innerHTML=mem+'<div style="padding:12px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft);box-shadow:var(--shadowSoft)"><span class="bodyL">'+m.text+'</span></div>';
+      el.innerHTML=mem+'<div style="padding:12px 16px;border-radius:16px 16px 16px 4px;background:var(--surface);border:1px solid var(--borderSoft);box-shadow:var(--shadowSoft)"><span class="bodyL">'+m.text+'</span></div>';
     }
     return el;
   }
   function renderChat(){
-    statusBar(true); view.style.padding='0';
-    if(S.msgs.length===0){ S.msgs=[
-      {who:'naru',text:'안녕하세요, '+S.name+'님. 오늘도 이렇게 마음을 들여다보러 와줘서 고마워요.'},
+    view.style.padding='0';
+    if(S.msgs.length===0){ replyI=0; S.msgs=[
+      {who:'naru',text:'안녕하세요, '+esc(S.name)+'님. 오늘도 이렇게 마음을 들여다보러 와줘서 고마워요.'},
       {who:'naru',text:'어제는 사람들 사이에서 작아지는 기분이 들었다고 했었죠. 오늘 그 마음은 좀 어떤가요?',mem:true}
     ]; }
     var isInit = !view.querySelector('#chatscroll');
@@ -332,7 +332,7 @@ import './index.css';
       function send(text){ text=(text||inp.value).trim(); if(!text||S.typing) return; inp.value=''; S.msgs.push({who:'me',text:text}); S.typing=true; inp.disabled=true; inp.style.opacity='.5';
         scroll.appendChild(msgNode({who:'me',text:text}));
         var typingEl=document.createElement('div'); typingEl.id='typing-indicator';
-        typingEl.style.cssText='align-self:flex-start;display:flex;gap:5px;padding:12px 16px;border-radius:20px 20px 20px 6px;background:var(--surface);border:1px solid var(--borderSoft)';
+        typingEl.style.cssText='align-self:flex-start;display:flex;gap:5px;padding:12px 16px;border-radius:16px 16px 16px 4px;background:var(--surface);border:1px solid var(--borderSoft)';
         typingEl.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s 0s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .18s infinite"></span><span style="width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1.2s .36s infinite"></span>';
         scroll.appendChild(typingEl); scroll.scrollTop=scroll.scrollHeight;
         setTimeout(function(){ var ti=document.getElementById('typing-indicator'); if(ti) ti.remove();
@@ -360,7 +360,7 @@ import './index.css';
      rating:4.9,reviews:0,avail:false,nextSlot:'오늘 오후 4시',coral:false}
   ];
   function renderCounsel(){
-    statusBar(false,'var(--bg)'); view.style.padding='0';
+    view.style.padding='0';
     var rec=EXPERTS[0];
     var others=EXPERTS.slice(1);
     var filterAvail=false;
@@ -372,7 +372,7 @@ import './index.css';
     function avatar(c,size,fsize){ return '<span class="av'+(c.coral?' coral':'')+'" style="width:'+size+'px;height:'+size+'px;font-size:'+fsize+'px;flex-shrink:0">'+c.name.charAt(0)+'</span>'; }
     function renderList(list){
       return list.map(function(c,i){
-        return '<div'+(i>0?' style="border-top:1px solid var(--borderSoft)"':'')+' style="cursor:pointer">'+
+        return '<div style="cursor:pointer;'+(i>0?'border-top:1px solid var(--borderSoft)':'')+'">'+
           '<div style="display:flex;align-items:center;gap:12px;padding:16px">'+
             avatar(c,44,16)+
             '<div style="flex:1;min-width:0">'+
@@ -457,16 +457,16 @@ import './index.css';
 
   /* ============ PROFILE ============ */
   function renderProfile(){
-    statusBar(true, 'var(--breeze)'); view.style.padding='0';
+    view.style.padding='0';
     function row(icn,label,sub,hl){ return '<div class="row"><span class="rowic"'+(hl?' style="background:var(--coralSoft);color:var(--coralDeep)"':'')+'>'+ic(icn,'s20')+'</span><div style="flex:1"><div class="'+(hl?'bodyMm" style="color:var(--coralDeep)':'bodyL"')+'>'+label+'</div></div>'+(sub?'<span class="bodyM" style="color:var(--faint)">'+sub+'</span>':'')+icc('i-right','s20','color:var(--faint)')+'</div>'; }
     view.innerHTML='<div class="view-anim" style="background:var(--bgSoft);min-height:100%">'+
       '<div class="wave"><span class="glow"></span><div class="inner" style="padding:48px 20px 32px;display:flex;align-items:center;gap:16px">'+
-        '<span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;flex-shrink:0;box-shadow:var(--shadowSoft)"><span class="h2" style="color:#fff">'+S.name.charAt(0)+'</span></span>'+
-        '<div style="flex:1"><div class="h3" style="color:#fff">'+S.name+'님</div><div class="bodyMm" style="color:rgba(255,255,255,.9);margin-top:4px">나루와 함께 마음을 들여다보고 있어요</div></div>'+
+        '<span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;flex-shrink:0;box-shadow:var(--shadowSoft)"><span class="h2" style="color:#fff">'+esc(S.name.charAt(0))+'</span></span>'+
+        '<div style="flex:1"><div class="h3" style="color:#fff">'+esc(S.name)+'님</div><div class="bodyMm" style="color:rgba(255,255,255,.9);margin-top:4px">나루와 함께 마음을 들여다보고 있어요</div></div>'+
         '<span style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.22);display:grid;place-items:center;color:#fff">'+ic('i-pencil','s20')+'</span>'+
       '</div></div>'+
       '<div style="padding:16px 16px 24px;display:flex;flex-direction:column;gap:16px">'+
-        '<div class="card" style="padding:16px;display:flex;gap:14px;align-items:center"><span style="width:46px;height:46px;border-radius:16px;background:var(--breeze50);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-spark','s20')+'</span><div style="flex:1"><div class="bodyLm">이번 주, 네 번 곁에 머물렀어요</div><div class="cap" style="color:var(--text3);margin-top:3px">잠시 들렀다 가도, 오래 머물러도 괜찮아요</div></div></div>'+
+        '<div class="card" style="padding:16px;display:flex;gap:16px;align-items:center"><span style="width:46px;height:46px;border-radius:12px;background:var(--breeze50);display:grid;place-items:center;flex-shrink:0;color:var(--breezeDeep)">'+ic('i-spark','s20')+'</span><div style="flex:1"><div class="bodyLm">이번 주, 네 번 곁에 머물렀어요</div><div class="cap" style="color:var(--text3);margin-top:3px">잠시 들렀다 가도, 오래 머물러도 괜찮아요</div></div></div>'+
         '<div><div class="capm" style="color:var(--text3);padding:0 0 8px">마음 관리</div><div class="card" style="overflow:hidden">'+row('i-bell','알림 설정','매일 저녁 9시')+'<div style="height:1px;background:var(--borderSoft);margin:0 16px"></div>'+row('i-target','나의 마음 목표','주 5회 기록')+'</div></div>'+
         '<div><div class="capm" style="color:var(--text3);padding:0 0 8px">앱 설정</div><div class="card" style="overflow:hidden">'+
           '<div class="row" style="cursor:default"><span class="rowic">'+ic('i-moon','s20')+'</span><div style="flex:1" class="bodyL">다크 모드</div><button class="toggle'+(S.dark?'':' off')+'" id="p-dark"><span class="knob"></span></button></div>'+
