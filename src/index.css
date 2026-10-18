@@ -4,6 +4,7 @@
   --text:#1E293B; --text2:#475569; --text3:#64748B; --faint:#94A3B8;
   --bg:#FFFFFF; --bgSoft:#F8FAFC; --bgSub:#F1F5F9; --border:#E6ECF1; --borderSoft:#EEF2F6; --surface:#fff;
   --shadowSoft:0 1px 6px -2px rgba(30,41,59,.07);
+  --sb-h:48px; --green:#34A870; --greenSoft:#E2F4EC;
   --font:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
 }
 .dark{
@@ -12,6 +13,7 @@
   --breezeDeep:#7BBCC5;
   --breeze100:#1B4250; --breeze50:#14303A; --mist100:#1E3D45; --coralSoft:#3A2620; --oatSoft:#2A2823;
   --shadowSoft:0 2px 18px -8px rgba(0,0,0,.5);
+  --green:#5BBF8C; --greenSoft:#1A3D2A;
 }
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html,body{ margin:0; height:100%; }
